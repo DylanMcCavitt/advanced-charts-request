@@ -18,7 +18,7 @@
     </a>
     <div class="status-strip" aria-label="Artifact status">
       <span class="status-pill ok">Datafeed status linked</span>
-      <span class="status-pill pending">Advanced Charts pending</span>
+      <span class="status-pill neutral">Readiness notes linked</span>
       <span class="status-pill neutral">Evidence handoff</span>
     </div>
   </header>
@@ -35,8 +35,7 @@
       </div>
       <div class="route-links" aria-label="Primary evidence links">
         <a href="/prototype">Annotation prototype</a>
-        <a href="/widget-demo">Widget fallback</a>
-        <a href="/advanced-charts">Adapter scaffold</a>
+        <a href="/widget-demo">Widget view</a>
         <a href="/api/datafeed/status">Datafeed status</a>
       </div>
     </section>
@@ -53,9 +52,9 @@
         <p>Server-side endpoints expose chart data and status without browser-side credentials.</p>
       </article>
       <article class="evidence-status-card">
-        <span class="panel-label">Advanced Charts</span>
-        <strong>Pending approval</strong>
-        <p>No private TradingView library assets are loaded or committed in this public scaffold.</p>
+        <span class="panel-label">Readiness notes</span>
+        <strong>Documented separately</strong>
+        <p>Future drawing-library integration notes stay out of the main demo path.</p>
       </article>
       <article class="evidence-status-card caveat-card">
         <span class="panel-label">Boundary</span>
@@ -86,9 +85,9 @@
         <article class="proof-card">
           <div>
             <span class="panel-label">/widget-demo</span>
-            <h3>TradingView widget fallback</h3>
+            <h3>TradingView widget view</h3>
             <p>
-              Shows the public widget as a clean fallback and states its limitation: chart display is available, but
+              Shows the public widget as a clean chart surface and states its limitation: chart display is available, but
               programmable native drawing APIs and JSON export require Advanced Charts.
             </p>
           </div>
@@ -97,14 +96,14 @@
 
         <article class="proof-card">
           <div>
-            <span class="panel-label">/advanced-charts</span>
-            <h3>Adapter scaffold readiness</h3>
+            <span class="panel-label">Readiness doc</span>
+            <h3>Drawing integration notes</h3>
             <p>
-              Keeps the Advanced Charts state honest while access is pending and documents how prototype annotations
-              map to official drawing method call descriptors.
+              Documents how prototype annotations map to official drawing method call descriptors, without loading
+              private TradingView library assets.
             </p>
           </div>
-          <a href="/advanced-charts">Open scaffold</a>
+          <a href="/docs/advanced-charts-readiness.md">Open notes</a>
         </article>
 
         <article class="proof-card">
@@ -143,7 +142,7 @@
           <ul>
             <li>Market data is provided through Alpaca-backed server endpoints.</li>
             <li>TradingView attribution remains visible on widget and planned Advanced Charts surfaces.</li>
-            <li>Advanced Charts access is pending; this site does not include private library files.</li>
+            <li>Future Advanced Charts integration notes live in documentation; private library files are not included.</li>
             <li>Prototype annotations are deterministic visual review artifacts, not advice or automation.</li>
           </ul>
         </div>
@@ -167,7 +166,7 @@
         </div>
         <div>
           <span class="panel-label">Language</span>
-          <p>Copy uses chart review, visualization, annotation, artifacts, datafeed, caveat, and pending-state terms.</p>
+          <p>Copy uses chart review, visualization, annotation, artifacts, datafeed, caveat, and readiness terms.</p>
         </div>
         <div>
           <span class="panel-label">No hover-only proof</span>
@@ -180,7 +179,7 @@
   <footer>
     <p>
       Chart Review Lab is an independent public chart-review prototype. This page is a handoff artifact for
-      collaborators and TradingView review while Advanced Charts access remains pending.
+      collaborators and TradingView review.
     </p>
   </footer>
 </body>

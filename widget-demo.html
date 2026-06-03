@@ -6,7 +6,7 @@
   <title>Widget Demo | Chart Review Lab</title>
   <meta
     name="description"
-    content="TradingView widget fallback demo for Chart Review Lab while Advanced Charts access is pending."
+    content="TradingView widget view for Chart Review Lab with visible attribution and clear annotation limitations."
   >
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -18,26 +18,24 @@
     </a>
     <div class="status-strip" aria-label="Integration status">
       <span class="status-pill ok">Alpaca datafeed ok</span>
-      <span class="status-pill pending">Advanced Charts pending</span>
-      <span class="status-pill neutral">Widget fallback</span>
+      <span class="status-pill neutral">Widget view</span>
+      <span class="status-pill neutral">Attribution visible</span>
     </div>
   </header>
 
   <main class="widget-shell" aria-labelledby="widget-title">
     <section class="widget-intro">
       <div>
-        <p class="eyebrow">Fallback path</p>
-        <h1 id="widget-title">TradingView widget demo</h1>
+        <p class="eyebrow">Public chart view</p>
+        <h1 id="widget-title">TradingView widget view</h1>
         <p>
-          This page shows the public widget option if Advanced Charts approval takes longer than expected.
-          It preserves TradingView chart rendering and attribution while keeping Chart Review Lab's review
-          boundary visible.
+          A clean public TradingView chart surface for comparing widget display with Chart Review Lab's
+          annotation evidence workflow. Attribution and review boundaries stay visible.
         </p>
       </div>
       <div class="route-links" aria-label="Related routes">
         <a href="/">Main page</a>
         <a href="/prototype">Annotation prototype</a>
-        <a href="/advanced-charts">Advanced Charts scaffold</a>
         <a href="/evidence">Evidence handoff</a>
         <a href="/api/datafeed/status">Alpaca datafeed status</a>
       </div>
@@ -54,7 +52,7 @@
           <strong>TradingView public widget</strong>
         </div>
         <div class="panel-section">
-          <span class="panel-label">Fallback use</span>
+          <span class="panel-label">Widget use</span>
           <p>
             Public chart display with built-in symbol, interval, and style controls.
           </p>
@@ -103,13 +101,13 @@
         </div>
       </div>
 
-      <aside class="workspace-panel evidence-panel" aria-label="Fallback evidence">
+      <aside class="workspace-panel evidence-panel" aria-label="Widget evidence">
         <div class="panel-section">
           <span class="panel-label">Supports</span>
           <ul>
             <li>Public TradingView-powered chart display</li>
             <li>Built-in widget controls and visible attribution</li>
-            <li>Clean fallback page while approval is pending</li>
+            <li>Clean comparison surface for the annotation demo</li>
           </ul>
         </div>
         <div class="panel-section caveat-section">
@@ -123,7 +121,7 @@
           <span class="panel-label">Source caveat</span>
           <p>
             This widget uses TradingView public widget data. The Alpaca UDF datafeed remains available for the
-            planned Advanced Charts integration.
+            documented drawing integration path.
           </p>
         </div>
       </aside>
@@ -132,9 +130,8 @@
 
   <footer>
     <p>
-      Chart Review Lab is an independent public integration request prototype. TradingView attribution remains visible
-      in widget mode and will remain visible in the final Advanced Charts implementation. See the
-      <a href="/evidence">evidence handoff</a> for artifact links and caveats.
+      Chart Review Lab is an independent public chart-review demo. TradingView attribution remains visible in widget
+      mode. See the <a href="/evidence">evidence handoff</a> for artifact links and caveats.
     </p>
   </footer>
 </body>

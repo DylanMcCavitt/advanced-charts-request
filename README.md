@@ -1,6 +1,6 @@
 # Chart Review Lab
 
-Public landing page for requesting TradingView Advanced Charts access.
+Public chart-review demo with Alpaca-backed datafeed endpoints, annotation artifacts, and Advanced Charts readiness notes.
 
 Public site:
 
@@ -10,8 +10,8 @@ https://chartreviewlab.company
 
 Routes:
 
-- `/` public request page
-- `/widget-demo` public TradingView widget fallback
+- `/` public chart-review demo page
+- `/widget-demo` public TradingView widget view
 - `/prototype` Alpaca-backed Lightweight Charts annotation prototype
 - `/advanced-charts` guarded Advanced Charts adapter scaffold while approval is pending
 - `/evidence` public artifact handoff with page proof points, caveats, and validation links
