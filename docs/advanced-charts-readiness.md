@@ -1,64 +1,52 @@
-# Advanced Charts Readiness
+# Advanced Charts Decision and Lightweight Charts Pivot
 
 ## Status
 
-TradingView Advanced Charts access is pending. This repository does not include private TradingView library files, copied charting library bundles, or licensed assets.
+TradingView declined Advanced Charts for personal use on June 3, 2026. Chart Review Lab now treats Lightweight Charts as the primary renderer path for the public chart-review workspace.
 
-Primary references:
+This repository does not include private TradingView library files, copied charting library bundles, licensed Advanced Charts assets, broker integrations, order-routing code, or account-state workflows.
 
-- TradingView Drawings API: https://www.tradingview.com/charting-library-docs/latest/ui_elements/drawings/drawings-api/
-- TradingView UDF adapter: https://www.tradingview.com/charting-library-docs/latest/connecting_data/UDF/
+Primary public routes:
 
-The public placeholder route is `/advanced-charts`. It documents the guarded state and keeps the current public fallback paths available:
-
-- `/prototype` uses Lightweight Charts with local SVG review overlays.
-- `/widget-demo` uses the public TradingView widget fallback.
-- `/api/datafeed` is the Alpaca-backed UDF datafeed base.
+- `/prototype` is the Alpaca-backed Lightweight Charts annotation workspace.
+- `/widget-demo` is a display-only TradingView public widget comparison route.
+- `/advanced-charts` is an archived decision page for the declined Advanced Charts request.
+- `/api/datafeed` is the Alpaca-backed UDF-shaped datafeed base.
 - `/evidence` is the public artifact handoff with route proof points, source caveats, and validation links.
 
-## Post-Approval Setup
+Primary public reference:
 
-Use these steps only after TradingView grants access and provides the licensed Advanced Charts package.
+- Lightweight Charts use cases: https://www.tradingview.com/lightweight-charts/
 
-1. Keep the approved TradingView package outside git. For local verification, copy it into an ignored path such as `vendor/tradingview/charting_library/`.
-2. Keep the UDF bundle from the approved package outside git as well, for example `vendor/tradingview/datafeeds/udf/dist/bundle.js`.
-3. Load those approved files from the deployed artifact or private deployment storage. Do not commit the package, minified bundles, or license-only assets.
-4. Instantiate the UDF datafeed with the existing base URL:
+## Lightweight Charts Route Contract
 
-```js
-const datafeed = new Datafeeds.UDFCompatibleDatafeed("/api/datafeed");
+The supported demo path is:
+
+```text
+/prototype
 ```
 
-5. Create the Advanced Charts widget with the approved library path, the UDF datafeed, and the current review defaults:
+The route loads Lightweight Charts from a public CDN, reads OHLCV through Chart Review Lab's server-side datafeed endpoints, and renders local SVG review overlays above the chart.
 
-```js
-new TradingView.widget({
-  container: "advanced-charts-container",
-  library_path: "/vendor/tradingview/charting_library/",
-  datafeed,
-  symbol: "NASDAQ:NVDA",
-  interval: "D",
-  timezone: "America/New_York",
-  locale: "en",
-  theme: "light",
-  autosize: true
-});
-```
+The review workspace must keep these properties:
 
-6. After `onChartReady`, pass `widget.activeChart()` to the review drawing adapter in `advanced-charts-adapter.js`.
-7. Map the existing prototype annotation artifacts through `mapPrototypeAnnotationToDrawingCalls(annotation, context)`, then apply the resulting calls through `createReviewDrawingAdapter(chartApi)`.
-8. Keep the product boundary unchanged: chart review only, with no recommendations, rankings, alerts, broker actions, orders, positions, or execution behavior.
-9. Keep attribution visible and keep Alpaca data-source caveats visible wherever chart data appears.
+- Candles are rendered with Lightweight Charts.
+- Alpaca Market Data credentials stay server-side.
+- Source metadata and latest-bar context stay visible.
+- Review overlays are deterministic artifacts for inspection only.
+- Annotation JSON remains inspectable and exportable.
+- The page keeps mobile stacking and non-hover evidence access.
+- The page does not choose symbols, rank outcomes, alert, connect brokers, manage positions, route orders, or provide financial advice.
 
-## UDF Datafeed Contract
+## Datafeed Contract
 
-Advanced Charts should use the same UDF base URL already deployed:
+Lightweight Charts uses the same public datafeed base:
 
 ```text
 /api/datafeed
 ```
 
-The base exposes the endpoints the UDF adapter expects:
+The base exposes:
 
 - `/config`
 - `/search?query=NVDA`
@@ -69,19 +57,11 @@ The base exposes the endpoints the UDF adapter expects:
 
 The backend keeps Alpaca credentials server-side and returns UDF-style history payloads with `s`, `t`, `o`, `h`, `l`, `c`, and `v` fields.
 
-## Drawing Adapter Contract
+## Advanced Charts Boundary
 
-The prototype annotation JSON maps to official Advanced Charts drawing calls as follows:
+Advanced Charts is not an active implementation path for this personal-use project. The archived adapter scaffold remains only as historical mapping context and must not be presented as pending approval.
 
-| Prototype annotation type | Adapter call | Advanced Charts shape intent | Notes |
-| --- | --- | --- | --- |
-| `horizontal_level` | `createShape(point, options)` | horizontal line | Uses `draw.price` plus the current chart anchor time from context. |
-| `range_box` | `createMultipointShape(points, options)` | rectangle | Uses `draw.startTime`, `draw.endTime`, `draw.high`, and `draw.low`. |
-| `fib_style_levels` | `createShape(point, options)` per level | horizontal reference lines | Keeps the prototype's explicit review levels instead of implying a trading signal. |
-| `measured_projection` | `createMultipointShape(points, options)` plus `createShape` per reference level | trend line and horizontal references | Preserves the visual comparison artifact only. |
-| `text_labels` | `createShape(point, options)` per label | text labels | Uses label text, time, and price from `draw.labels`. |
-
-The adapter exposes only review drawing methods:
+The archived adapter exposed these review-only concepts:
 
 - `createShape`
 - `createMultipointShape`
@@ -91,11 +71,13 @@ The adapter exposes only review drawing methods:
 - `renderAnnotations`
 - `clearReviewDrawings`
 
-It does not call `createExecutionShape`, Trading Platform APIs, broker APIs, order APIs, account state, portfolio state, or alerting APIs.
+The adapter does not call `createExecutionShape`, Trading Platform APIs, broker APIs, order APIs, account state, portfolio state, or alerting APIs.
+
+If this project is ever moved under a qualifying company/public-application license, create a new issue and decision record before reopening any Advanced Charts work. Do not load or commit private assets without explicit approved access.
 
 ## Validation
 
-Before switching `/advanced-charts` from pending to active:
+Before shipping changes to this repo:
 
 1. Confirm no private files are tracked:
 
@@ -122,4 +104,5 @@ node --check advanced-charts-adapter.js
 ```
 
 4. Browser-check `/`, `/prototype`, `/widget-demo`, `/advanced-charts`, `/evidence`, and `/api/datafeed/status`.
-5. Verify the route still says Advanced Charts approval is pending until the approved package is actually loaded and the integration has been reviewed.
+5. Verify `/prototype` presents Lightweight Charts as the primary path.
+6. Verify `/advanced-charts` says Advanced Charts was declined for personal use and does not imply access is pending.

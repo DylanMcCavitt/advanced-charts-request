@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chart Review Lab | Chart Review Demo</title>
+  <title>Chart Review Lab | Lightweight Charts Review Demo</title>
   <meta
     name="description"
     content="Public chart-review demo with Alpaca-backed candles, deterministic annotations, source metadata, and exportable evidence artifacts."
@@ -19,7 +19,7 @@
     <nav aria-label="Primary navigation">
       <a href="#demo">Demo</a>
       <a href="#workflow">Workflow</a>
-      <a href="/prototype">Prototype</a>
+      <a href="/prototype">Lightweight Charts</a>
       <a href="/widget-demo">Widget view</a>
       <a href="/evidence">Evidence</a>
       <a href="#boundaries">Boundary</a>
@@ -38,19 +38,20 @@
       >
 
       <div class="hero-copy">
-        <p class="eyebrow">Live chart-review demo</p>
+        <p class="eyebrow">Lightweight Charts demo</p>
         <h1 id="page-title">Chart Review Lab</h1>
         <p class="hero-text">
-          Inspect Alpaca-backed candles, deterministic chart annotations, source metadata, and exportable evidence
-          artifacts in a public review workspace.
+          Inspect Alpaca-backed candles rendered with Lightweight Charts, deterministic chart annotations, source
+          metadata, and exportable evidence artifacts in a public review workspace.
         </p>
         <div class="hero-actions" aria-label="Primary links">
-          <a class="button primary" href="/prototype">Open annotation demo</a>
+          <a class="button primary" href="/prototype">Open Lightweight Charts demo</a>
           <a class="button secondary" href="/evidence">Review evidence</a>
           <a class="button secondary" href="/api/datafeed/status">Datafeed status</a>
         </div>
         <div class="hero-status-row" aria-label="Demo proof points">
           <span>Alpaca SIP datafeed</span>
+          <span>Open-source renderer</span>
           <span>Inspectable JSON</span>
           <span>Visible attribution</span>
           <span>Chart review only</span>
@@ -64,9 +65,9 @@
           <p class="eyebrow">Working demo</p>
           <h2 id="demo-title">A public evidence bench for chart review</h2>
           <p>
-            The demo renders market data, draws deterministic review overlays, and exposes the values behind each
-            annotation. It is built for inspection: labels stay visible, metadata is readable, and artifacts can be
-            copied or exported.
+            The demo uses TradingView Lightweight Charts for the candle surface, draws deterministic review overlays,
+            and exposes the values behind each annotation. It is built for inspection: labels stay visible, metadata is
+            readable, and artifacts can be copied or exported.
           </p>
         </div>
         <div class="facts" aria-label="Project facts">
@@ -75,8 +76,8 @@
             <strong>Alpaca UDF endpoint</strong>
           </div>
           <div>
-            <span>Review layer</span>
-            <strong>Visible annotations</strong>
+            <span>Renderer</span>
+            <strong>Lightweight Charts</strong>
           </div>
           <div>
             <span>Evidence</span>
@@ -96,10 +97,10 @@
         <h2 id="workflow-title">Chart data, annotations, and source evidence in one path</h2>
         <div class="implementation-grid">
           <article>
-            <h3>Candles</h3>
+            <h3>Renderer</h3>
             <p>
-              Browser requests go through Chart Review Lab's UDF endpoints, with Alpaca Market Data keys kept
-              server-side.
+              Lightweight Charts renders the candle surface from public chart data shaped by Chart Review Lab's UDF
+              endpoints.
             </p>
           </article>
           <article>
@@ -131,7 +132,7 @@
           </div>
           <div class="datafeed-links">
             <a href="/api/datafeed/status">Datafeed status</a>
-            <a href="/prototype">Annotation prototype</a>
+            <a href="/prototype">Lightweight Charts demo</a>
             <a href="/widget-demo">TradingView widget view</a>
             <a href="/evidence">Evidence report</a>
             <a href="/api/datafeed/config">UDF config</a>
@@ -166,11 +167,11 @@
           </p>
         </div>
         <div class="contact-links" aria-label="Contact links">
-          <a href="/prototype">Open the annotation demo</a>
+          <a href="/prototype">Open the Lightweight Charts demo</a>
           <a href="/evidence">Review the evidence report</a>
           <a href="/api/datafeed/status">Check datafeed status</a>
           <a href="https://github.com/DylanMcCavitt">GitHub: DylanMcCavitt</a>
-          <a href="https://www.tradingview.com/charting-library-docs/latest/ui_elements/drawings/drawings-api/">Drawing API documentation</a>
+          <a href="https://www.tradingview.com/lightweight-charts/">Lightweight Charts use cases</a>
         </div>
       </div>
     </section>
@@ -178,8 +179,8 @@
 
   <footer>
     <p>
-      Chart Review Lab is an independent public chart-review demo. TradingView is a registered trademark of
-      TradingView, Inc. Attribution remains visible where TradingView chart surfaces appear.
+      Chart Review Lab is an independent public chart-review demo using open-source Lightweight Charts by TradingView
+      and Alpaca Market Data through server-side endpoints.
     </p>
   </footer>
 </body>
