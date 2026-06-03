@@ -22,6 +22,8 @@ See `CONTEXT.md` for the product contract, repo boundary, ownership split with T
 
 See `docs/advanced-charts-readiness.md` for the pivot decision, Lightweight Charts route contract, and historical adapter notes.
 
+See `docs/review-artifact-v1.md` for the review-only artifact schema, sample fixtures, validation helper, and upstream-writing contract.
+
 ## Alpaca Datafeed
 
 The public UDF base URL is:

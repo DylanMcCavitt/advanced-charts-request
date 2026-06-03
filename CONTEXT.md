@@ -43,6 +43,7 @@ Upstream tools write artifacts into this lane. They do not become part of this a
 
 The minimum upstream handoff into Chart Review Lab is:
 
+- a `review_artifact_v1` payload that validates against `docs/schemas/review_artifact_v1.schema.json`
 - symbol and timeframe context for the review window
 - candle-window bounds or equivalent replay context
 - deterministic annotation or artifact payloads to render

@@ -1,0 +1,115 @@
+{
+  "kind": "review_artifact_v1",
+  "symbol": "NYSE:SPY",
+  "resolution": "60",
+  "timeframe": "1H",
+  "dataSource": {
+    "provider": "alpaca",
+    "feed": "sip",
+    "baseUrl": "/api/datafeed",
+    "historyUrl": "/api/datafeed/history?symbol=NYSE:SPY&resolution=60&from=1770076800&to=1780420800"
+  },
+  "candleSource": {
+    "mode": "server_datafeed",
+    "bars": 64,
+    "windowStart": "2026-05-19 09:30",
+    "windowEnd": "2026-06-02 16:00",
+    "latestBarTime": "2026-06-02 16:00",
+    "stale": false
+  },
+  "generatedAt": "2026-06-03T16:05:00.000Z",
+  "sourceMetadata": {
+    "endpoint": "/api/datafeed/history",
+    "statusOk": true,
+    "renderer": "lightweight_charts",
+    "route": "/prototype",
+    "barsReviewed": 64
+  },
+  "caveats": [
+    "Fixture values are sample review-overlay coordinates.",
+    "The artifact references only public Chart Review Lab datafeed paths."
+  ],
+  "viewerState": {
+    "visibleFilter": "projection",
+    "selectedAnnotationId": "measured-projection"
+  },
+  "annotations": [
+    {
+      "id": "measured-projection",
+      "group": "projection",
+      "type": "measured_projection",
+      "label": "Measured projection",
+      "color": "#334155",
+      "summary": "Range height projected above and below the reference range for visual comparison.",
+      "values": {
+        "rangeHeight": 12.42,
+        "upper": 612.73,
+        "lower": 577.18
+      },
+      "draw": {
+        "startTime": 1779197400,
+        "endTime": 1779283800,
+        "high": 607.98,
+        "low": 595.56,
+        "levels": [
+          {
+            "label": "Upper measured reference",
+            "price": 612.73
+          },
+          {
+            "label": "Lower measured reference",
+            "price": 577.18
+          }
+        ]
+      },
+      "source": {
+        "symbol": "NYSE:SPY",
+        "timeframe": "1H",
+        "resolution": "60",
+        "endpoint": "/api/datafeed/history",
+        "barsReviewed": 64,
+        "generatedAt": "2026-06-03T16:05:00.000Z"
+      }
+    },
+    {
+      "id": "text-labels",
+      "group": "labels",
+      "type": "text_labels",
+      "label": "Text labels",
+      "color": "#121821",
+      "summary": "Plain-language labels attached to the latest bar and review extremes.",
+      "values": {
+        "latestClose": 602.48,
+        "latestTime": "2026-06-02 16:00",
+        "labels": 3
+      },
+      "draw": {
+        "labels": [
+          {
+            "text": "Latest close",
+            "time": 1780420800,
+            "price": 602.48
+          },
+          {
+            "text": "Review high",
+            "time": 1779283800,
+            "price": 607.98
+          },
+          {
+            "text": "Review low",
+            "time": 1779197400,
+            "price": 595.56
+          }
+        ]
+      },
+      "source": {
+        "symbol": "NYSE:SPY",
+        "timeframe": "1H",
+        "resolution": "60",
+        "endpoint": "/api/datafeed/history",
+        "barsReviewed": 64,
+        "generatedAt": "2026-06-03T16:05:00.000Z"
+      }
+    }
+  ]
+}
