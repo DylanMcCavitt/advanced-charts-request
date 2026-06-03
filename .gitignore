@@ -1,1 +1,5 @@
 .vercel
+vendor/tradingview/
+charting_library/
+datafeeds/
+.tradingview/
