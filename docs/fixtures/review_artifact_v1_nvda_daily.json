@@ -1,0 +1,130 @@
+{
+  "kind": "review_artifact_v1",
+  "symbol": "NASDAQ:NVDA",
+  "resolution": "D",
+  "timeframe": "Daily",
+  "dataSource": {
+    "provider": "alpaca",
+    "feed": "sip",
+    "baseUrl": "/api/datafeed",
+    "historyUrl": "/api/datafeed/history?symbol=NASDAQ:NVDA&resolution=D&from=1745193600&to=1770076800"
+  },
+  "candleSource": {
+    "mode": "server_datafeed",
+    "bars": 80,
+    "windowStart": "2026-01-05 09:30",
+    "windowEnd": "2026-06-02 16:00",
+    "latestBarTime": "2026-06-02 16:00",
+    "stale": false
+  },
+  "generatedAt": "2026-06-03T16:00:00.000Z",
+  "sourceMetadata": {
+    "endpoint": "/api/datafeed/history",
+    "statusOk": true,
+    "renderer": "lightweight_charts",
+    "route": "/prototype",
+    "barsReviewed": 80
+  },
+  "caveats": [
+    "Candles are requested through Chart Review Lab server-side datafeed routes.",
+    "Annotations are deterministic review overlays for inspection only."
+  ],
+  "viewerState": {
+    "visibleFilter": "all",
+    "selectedAnnotationId": "level-review-high"
+  },
+  "annotations": [
+    {
+      "id": "level-review-high",
+      "group": "levels",
+      "type": "horizontal_level",
+      "label": "Review high",
+      "color": "#0f766e",
+      "summary": "Highest high in the recent review window.",
+      "values": {
+        "price": 143.25,
+        "time": "2026-05-28 16:00",
+        "basis": "max high across recent review bars"
+      },
+      "draw": {
+        "price": 143.25
+      },
+      "source": {
+        "symbol": "NASDAQ:NVDA",
+        "timeframe": "Daily",
+        "resolution": "D",
+        "endpoint": "/api/datafeed/history",
+        "barsReviewed": 80,
+        "generatedAt": "2026-06-03T16:00:00.000Z"
+      }
+    },
+    {
+      "id": "range-reference",
+      "group": "range",
+      "type": "range_box",
+      "label": "Reference range",
+      "color": "#1d4ed8",
+      "summary": "Box built from the first segment of the recent review window.",
+      "values": {
+        "start": "2026-01-05 09:30",
+        "end": "2026-02-03 16:00",
+        "high": 129.7,
+        "low": 104.15,
+        "bars": 20
+      },
+      "draw": {
+        "startTime": 1767623400,
+        "endTime": 1770152400,
+        "high": 129.7,
+        "low": 104.15
+      },
+      "source": {
+        "symbol": "NASDAQ:NVDA",
+        "timeframe": "Daily",
+        "resolution": "D",
+        "endpoint": "/api/datafeed/history",
+        "barsReviewed": 80,
+        "generatedAt": "2026-06-03T16:00:00.000Z"
+      }
+    },
+    {
+      "id": "fib-reference",
+      "group": "fib",
+      "type": "fib_style_levels",
+      "label": "Fib-style references",
+      "color": "#b45309",
+      "summary": "Retracement-style reference lines between the review high and review low.",
+      "values": {
+        "38.2%": 128.31,
+        "50%": 123.69,
+        "61.8%": 119.07
+      },
+      "draw": {
+        "levels": [
+          {
+            "ratio": 0.382,
+            "price": 128.31
+          },
+          {
+            "ratio": 0.5,
+            "price": 123.69
+          },
+          {
+            "ratio": 0.618,
+            "price": 119.07
+          }
+        ],
+        "startTime": 1767623400,
+        "endTime": 1780420800
+      },
+      "source": {
+        "symbol": "NASDAQ:NVDA",
+        "timeframe": "Daily",
+        "resolution": "D",
+        "endpoint": "/api/datafeed/history",
+        "barsReviewed": 80,
+        "generatedAt": "2026-06-03T16:00:00.000Z"
+      }
+    }
+  ]
+}

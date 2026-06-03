@@ -751,26 +751,85 @@
   }
 
   function annotationPayloadText() {
-    return JSON.stringify(
-      {
-        source: {
-          symbol: state.symbol,
-          resolution: state.resolution,
-          timeframe: TIMEFRAMES[state.resolution]?.label ?? state.resolution,
-          endpoint: state.lastEndpoint,
-          feed: state.statusPayload?.feed ?? "unknown",
-          bars: state.candles.length,
-          latestBarTime: state.candles.at(-1) ? formatDateTime(state.candles.at(-1).time) : null,
-          stale: state.stale,
-          generatedAt: new Date().toISOString()
-        },
-        visibleFilter: state.overlayVisible ? state.filter : "none",
-        selectedAnnotationId: state.selectedId,
-        annotations: state.annotations
+    const artifact = reviewArtifactPayload();
+    const validator = window.ChartReviewArtifact;
+    if (validator?.validateReviewArtifact) {
+      const result = validator.validateReviewArtifact(artifact);
+      if (!result.valid) {
+        return JSON.stringify(
+          {
+            kind: "review_artifact_v1_validation_error",
+            errors: result.errors
+          },
+          null,
+          2
+        );
+      }
+    }
+    return JSON.stringify(artifact, null, 2);
+  }
+
+  function reviewArtifactPayload() {
+    const first = state.candles[0] || null;
+    const latest = state.candles.at(-1) || null;
+    const timeframe = TIMEFRAMES[state.resolution]?.label ?? state.resolution;
+    const endpoint = state.lastEndpoint || "/api/datafeed/history";
+    const generatedAt = new Date().toISOString();
+    const feed = state.statusPayload?.feed ?? "unknown";
+
+    return {
+      kind: "review_artifact_v1",
+      symbol: state.symbol,
+      resolution: state.resolution,
+      timeframe,
+      dataSource: {
+        provider: "alpaca",
+        feed,
+        baseUrl: datafeedBaseText(),
+        historyUrl: endpoint
       },
-      null,
-      2
-    );
+      candleSource: {
+        mode: "server_datafeed",
+        bars: state.candles.length,
+        windowStart: first ? formatDateTime(first.time) : null,
+        windowEnd: latest ? formatDateTime(latest.time) : null,
+        latestBarTime: latest ? formatDateTime(latest.time) : null,
+        stale: state.stale
+      },
+      generatedAt,
+      sourceMetadata: {
+        endpoint,
+        statusOk: state.statusPayload?.ok === true,
+        renderer: "lightweight_charts",
+        route: "/prototype",
+        barsReviewed: state.annotations[0]?.source?.barsReviewed ?? 0
+      },
+      caveats: artifactCaveats(),
+      viewerState: {
+        visibleFilter: state.overlayVisible ? state.filter : "none",
+        selectedAnnotationId: state.selectedId
+      },
+      annotations: state.annotations
+    };
+  }
+
+  function datafeedBaseText() {
+    const overrideBase = new URLSearchParams(window.location.search).get("datafeedBase");
+    return overrideBase ? overrideBase.replace(/\/+$/, "") : "/api/datafeed";
+  }
+
+  function artifactCaveats() {
+    const caveats = [
+      "Candles are requested through Chart Review Lab server-side datafeed routes.",
+      "Annotations are deterministic review overlays for inspection only."
+    ];
+    if (state.stale) {
+      caveats.push("Latest returned candle is older than the expected review window.");
+    }
+    if (state.statusPayload?.ok !== true) {
+      caveats.push("Datafeed status was not confirmed for this artifact.");
+    }
+    return caveats;
   }
 
   function sourceSummaryText() {
