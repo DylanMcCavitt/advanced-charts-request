@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Evidence Handoff | Chart Review Lab</title>
+  <meta
+    name="description"
+    content="Public evidence artifact handoff for Chart Review Lab prototype review, datafeed status, caveats, and route proof points."
+  >
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="workspace-page evidence-page">
+  <header class="workspace-topbar" aria-label="Evidence handoff status">
+    <a class="brand workspace-brand" href="/" aria-label="Chart Review Lab home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>Chart Review Lab</span>
+    </a>
+    <div class="status-strip" aria-label="Artifact status">
+      <span class="status-pill ok">Datafeed status linked</span>
+      <span class="status-pill pending">Advanced Charts pending</span>
+      <span class="status-pill neutral">Evidence handoff</span>
+    </div>
+  </header>
+
+  <main class="evidence-shell" aria-labelledby="evidence-title">
+    <section class="evidence-hero">
+      <div>
+        <p class="eyebrow">Public artifact handoff</p>
+        <h1 id="evidence-title">Prototype evidence report</h1>
+        <p>
+          A concise route-by-route handoff for Chart Review Lab. Each public page keeps the same boundary:
+          chart review, visualization, annotation evidence, visible data-source caveats, and no advisory workflow.
+        </p>
+      </div>
+      <div class="route-links" aria-label="Primary evidence links">
+        <a href="/prototype">Annotation prototype</a>
+        <a href="/widget-demo">Widget fallback</a>
+        <a href="/advanced-charts">Adapter scaffold</a>
+        <a href="/api/datafeed/status">Datafeed status</a>
+      </div>
+    </section>
+
+    <section class="evidence-status-grid" aria-label="Evidence status summary">
+      <article class="evidence-status-card">
+        <span class="panel-label">Selected direction</span>
+        <strong>Evidence Bench</strong>
+        <p>Three-zone review workspace: controls, chart canvas, and evidence inspector.</p>
+      </article>
+      <article class="evidence-status-card">
+        <span class="panel-label">Data source</span>
+        <strong>Alpaca UDF</strong>
+        <p>Server-side endpoints expose chart data and status without browser-side credentials.</p>
+      </article>
+      <article class="evidence-status-card">
+        <span class="panel-label">Advanced Charts</span>
+        <strong>Pending approval</strong>
+        <p>No private TradingView library assets are loaded or committed in this public scaffold.</p>
+      </article>
+      <article class="evidence-status-card caveat-card">
+        <span class="panel-label">Boundary</span>
+        <strong>Review artifacts only</strong>
+        <p>No symbol selection advice, rankings, alerts, broker actions, orders, account state, or execution behavior.</p>
+      </article>
+    </section>
+
+    <section class="evidence-section" aria-labelledby="proof-title">
+      <div class="section-heading">
+        <p class="eyebrow">What each page proves</p>
+        <h2 id="proof-title">Public route proof points</h2>
+      </div>
+
+      <div class="proof-list">
+        <article class="proof-card">
+          <div>
+            <span class="panel-label">/prototype</span>
+            <h3>Annotation evidence workspace</h3>
+            <p>
+              Demonstrates Alpaca-backed candles, deterministic labels, inspectable values, annotation JSON, and
+              chart/source artifact actions in the selected Evidence Bench layout.
+            </p>
+          </div>
+          <a href="/prototype">Open prototype</a>
+        </article>
+
+        <article class="proof-card">
+          <div>
+            <span class="panel-label">/widget-demo</span>
+            <h3>TradingView widget fallback</h3>
+            <p>
+              Shows the public widget as a clean fallback and states its limitation: chart display is available, but
+              programmable native drawing APIs and JSON export require Advanced Charts.
+            </p>
+          </div>
+          <a href="/widget-demo">Open widget demo</a>
+        </article>
+
+        <article class="proof-card">
+          <div>
+            <span class="panel-label">/advanced-charts</span>
+            <h3>Adapter scaffold readiness</h3>
+            <p>
+              Keeps the Advanced Charts state honest while access is pending and documents how prototype annotations
+              map to official drawing method call descriptors.
+            </p>
+          </div>
+          <a href="/advanced-charts">Open scaffold</a>
+        </article>
+
+        <article class="proof-card">
+          <div>
+            <span class="panel-label">/api/datafeed/status</span>
+            <h3>Datafeed health endpoint</h3>
+            <p>
+              Public JSON endpoint for checking the server-side datafeed status, feed selection, provider caveats,
+              symbol metadata, and latest returned bar context.
+            </p>
+          </div>
+          <a href="/api/datafeed/status">Open status JSON</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="evidence-section" aria-labelledby="artifact-title">
+      <div class="section-heading">
+        <p class="eyebrow">Inspectable artifacts</p>
+        <h2 id="artifact-title">Evidence links and source caveats</h2>
+      </div>
+
+      <div class="artifact-ledger">
+        <div>
+          <span class="panel-label">Artifact links</span>
+          <ul>
+            <li><a href="/api/datafeed/config">UDF config</a></li>
+            <li><a href="/api/datafeed/search?query=NVDA">Symbol search sample</a></li>
+            <li><a href="/api/datafeed/symbols?symbol=NASDAQ:NVDA">Symbol metadata sample</a></li>
+            <li><a href="/docs/advanced-charts-readiness.md">Advanced Charts readiness doc</a></li>
+            <li><a href="/docs/design/chart-review-lab-visual-brief.md">Selected visual brief</a></li>
+          </ul>
+        </div>
+        <div>
+          <span class="panel-label">Source caveats</span>
+          <ul>
+            <li>Market data is provided through Alpaca-backed server endpoints.</li>
+            <li>TradingView attribution remains visible on widget and planned Advanced Charts surfaces.</li>
+            <li>Advanced Charts access is pending; this site does not include private library files.</li>
+            <li>Prototype annotations are deterministic visual review artifacts, not advice or automation.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="evidence-section" aria-labelledby="qa-title">
+      <div class="section-heading">
+        <p class="eyebrow">QA checklist</p>
+        <h2 id="qa-title">Responsive review criteria</h2>
+      </div>
+
+      <div class="qa-grid">
+        <div>
+          <span class="panel-label">Desktop</span>
+          <p>Controls, chart canvas, evidence inspector, artifact actions, and caveats fit in a single bench layout.</p>
+        </div>
+        <div>
+          <span class="panel-label">Mobile</span>
+          <p>Status, controls, chart, annotation evidence, JSON, artifacts, and caveats stack in a clear sequence.</p>
+        </div>
+        <div>
+          <span class="panel-label">Language</span>
+          <p>Copy uses chart review, visualization, annotation, artifacts, datafeed, caveat, and pending-state terms.</p>
+        </div>
+        <div>
+          <span class="panel-label">No hover-only proof</span>
+          <p>Annotation labels, selected evidence, source metadata, and public artifact links are visible on the page.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Chart Review Lab is an independent public chart-review prototype. This page is a handoff artifact for
+      collaborators and TradingView review while Advanced Charts access remains pending.
+    </p>
+  </footer>
+</body>
+</html>

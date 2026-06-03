@@ -578,10 +578,15 @@
   function appendSvgLabel(text, x, y, color, selected = false) {
     const group = svgElement("g", { class: selected ? "svg-label selected" : "svg-label" });
     const labelWidth = Math.max(text.length * 7 + 14, 54);
+    const viewBox = dom.overlay.viewBox.baseVal;
+    const overlayWidth = viewBox?.width || Number(dom.overlay.getAttribute("width")) || 320;
+    const overlayHeight = viewBox?.height || Number(dom.overlay.getAttribute("height")) || 360;
+    const safeX = Math.min(Math.max(x, 4), Math.max(4, overlayWidth - labelWidth - 4));
+    const safeY = Math.min(Math.max(y, 18), Math.max(18, overlayHeight - 6));
     group.appendChild(
       svgElement("rect", {
-        x,
-        y: y - 14,
+        x: safeX,
+        y: safeY - 14,
         width: labelWidth,
         height: 20,
         rx: 3,
@@ -591,8 +596,8 @@
       })
     );
     const label = svgElement("text", {
-      x: x + 7,
-      y,
+      x: safeX + 7,
+      y: safeY,
       fill: selected ? "#ffffff" : color,
       "font-size": 12,
       "font-weight": 800,

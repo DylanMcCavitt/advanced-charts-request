@@ -14,6 +14,7 @@ Routes:
 - `/widget-demo` public TradingView widget fallback
 - `/prototype` Alpaca-backed Lightweight Charts annotation prototype
 - `/advanced-charts` guarded Advanced Charts adapter scaffold while approval is pending
+- `/evidence` public artifact handoff with page proof points, caveats, and validation links
 
 Suggested form values:
 

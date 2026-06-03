@@ -14,6 +14,7 @@ The public placeholder route is `/advanced-charts`. It documents the guarded sta
 - `/prototype` uses Lightweight Charts with local SVG review overlays.
 - `/widget-demo` uses the public TradingView widget fallback.
 - `/api/datafeed` is the Alpaca-backed UDF datafeed base.
+- `/evidence` is the public artifact handoff with route proof points, source caveats, and validation links.
 
 ## Post-Approval Setup
 
@@ -120,5 +121,5 @@ node --check prototype.js
 node --check advanced-charts-adapter.js
 ```
 
-4. Browser-check `/`, `/prototype`, `/widget-demo`, `/advanced-charts`, and `/api/datafeed/status`.
+4. Browser-check `/`, `/prototype`, `/widget-demo`, `/advanced-charts`, `/evidence`, and `/api/datafeed/status`.
 5. Verify the route still says Advanced Charts approval is pending until the approved package is actually loaded and the integration has been reviewed.
