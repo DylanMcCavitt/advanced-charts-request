@@ -854,7 +854,7 @@ p {
   font-size: 12px;
 }
 
-.advanced-placeholder {
+.advanced-mount {
   display: flex;
   min-height: min(68vh, 720px);
   padding: clamp(18px, 4vw, 42px);
@@ -866,14 +866,14 @@ p {
     repeating-linear-gradient(90deg, #edf2f7 0, #edf2f7 1px, transparent 1px, transparent 72px);
 }
 
-.advanced-placeholder h2 {
+.advanced-mount h2 {
   max-width: 680px;
   color: var(--ink);
   font-size: clamp(26px, 3vw, 42px);
   line-height: 1.05;
 }
 
-.advanced-placeholder p {
+.advanced-mount p {
   max-width: 760px;
   color: var(--muted);
 }
@@ -883,15 +883,15 @@ p {
 .advanced-charts-page .workspace-panel,
 .advanced-charts-page .prototype-stage,
 .advanced-charts-page .route-links,
-.advanced-placeholder {
+.advanced-mount {
   min-width: 0;
   max-width: 100%;
 }
 
 .advanced-charts-page .prototype-intro p,
 .advanced-charts-page .panel-section p,
-.advanced-placeholder p,
-.advanced-placeholder code {
+.advanced-mount p,
+.advanced-mount code {
   overflow-wrap: anywhere;
 }
 

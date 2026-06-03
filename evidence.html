@@ -3,33 +3,33 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Evidence Handoff | Chart Review Lab</title>
+  <title>Evidence Report | Chart Review Lab</title>
   <meta
     name="description"
-    content="Public evidence artifact handoff for Chart Review Lab prototype review, datafeed status, caveats, and route proof points."
+    content="Public evidence report for Chart Review Lab prototype review, datafeed status, caveats, and route proof points."
   >
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="workspace-page evidence-page">
-  <header class="workspace-topbar" aria-label="Evidence handoff status">
+  <header class="workspace-topbar" aria-label="Evidence report status">
     <a class="brand workspace-brand" href="/" aria-label="Chart Review Lab home">
       <span class="brand-mark" aria-hidden="true"></span>
       <span>Chart Review Lab</span>
     </a>
     <div class="status-strip" aria-label="Artifact status">
-      <span class="status-pill ok">Datafeed status linked</span>
-      <span class="status-pill neutral">Readiness notes linked</span>
-      <span class="status-pill neutral">Evidence handoff</span>
+      <span class="status-pill ok">Datafeed linked</span>
+      <span class="status-pill neutral">Route proof points</span>
+      <span class="status-pill neutral">Evidence report</span>
     </div>
   </header>
 
   <main class="evidence-shell" aria-labelledby="evidence-title">
     <section class="evidence-hero">
       <div>
-        <p class="eyebrow">Public artifact handoff</p>
+        <p class="eyebrow">Public evidence report</p>
         <h1 id="evidence-title">Prototype evidence report</h1>
         <p>
-          A concise route-by-route handoff for Chart Review Lab. Each public page keeps the same boundary:
+          A concise route-by-route report for Chart Review Lab. Each public page keeps the same boundary:
           chart review, visualization, annotation evidence, visible data-source caveats, and no advisory workflow.
         </p>
       </div>
@@ -52,9 +52,9 @@
         <p>Server-side endpoints expose chart data and status without browser-side credentials.</p>
       </article>
       <article class="evidence-status-card">
-        <span class="panel-label">Readiness notes</span>
-        <strong>Documented separately</strong>
-        <p>Future drawing-library integration notes stay out of the main demo path.</p>
+        <span class="panel-label">Advanced Charts boundary</span>
+        <strong>Gated separately</strong>
+        <p>Drawing-library integration stays out of the main demo path until approved access is available.</p>
       </article>
       <article class="evidence-status-card caveat-card">
         <span class="panel-label">Boundary</span>
@@ -96,18 +96,6 @@
 
         <article class="proof-card">
           <div>
-            <span class="panel-label">Readiness doc</span>
-            <h3>Drawing integration notes</h3>
-            <p>
-              Documents how prototype annotations map to official drawing method call descriptors, without loading
-              private TradingView library assets.
-            </p>
-          </div>
-          <a href="/docs/advanced-charts-readiness.md">Open notes</a>
-        </article>
-
-        <article class="proof-card">
-          <div>
             <span class="panel-label">/api/datafeed/status</span>
             <h3>Datafeed health endpoint</h3>
             <p>
@@ -130,11 +118,12 @@
         <div>
           <span class="panel-label">Artifact links</span>
           <ul>
+            <li><a href="/prototype">Annotation prototype</a></li>
+            <li><a href="/widget-demo">Widget view</a></li>
+            <li><a href="/api/datafeed/status">Datafeed status</a></li>
             <li><a href="/api/datafeed/config">UDF config</a></li>
             <li><a href="/api/datafeed/search?query=NVDA">Symbol search sample</a></li>
             <li><a href="/api/datafeed/symbols?symbol=NASDAQ:NVDA">Symbol metadata sample</a></li>
-            <li><a href="/docs/advanced-charts-readiness.md">Advanced Charts readiness doc</a></li>
-            <li><a href="/docs/design/chart-review-lab-visual-brief.md">Selected visual brief</a></li>
           </ul>
         </div>
         <div>
@@ -142,7 +131,7 @@
           <ul>
             <li>Market data is provided through Alpaca-backed server endpoints.</li>
             <li>TradingView attribution remains visible on widget and planned Advanced Charts surfaces.</li>
-            <li>Future Advanced Charts integration notes live in documentation; private library files are not included.</li>
+            <li>Advanced Charts integration remains gated; private library files are not included.</li>
             <li>Prototype annotations are deterministic visual review artifacts, not advice or automation.</li>
           </ul>
         </div>
@@ -178,7 +167,7 @@
 
   <footer>
     <p>
-      Chart Review Lab is an independent public chart-review prototype. This page is a handoff artifact for
+      Chart Review Lab is an independent public chart-review prototype. This page is an evidence report for
       collaborators and TradingView review.
     </p>
   </footer>
