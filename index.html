@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Chart Review Lab | Advanced Charts Request</title>
+  <title>Chart Review Lab | Chart Review Demo</title>
   <meta
     name="description"
-    content="Public chart-review and annotation prototype requesting TradingView Advanced Charts access for official drawing API integration."
+    content="Public chart-review demo with Alpaca-backed candles, deterministic annotations, source metadata, and exportable evidence artifacts."
   >
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -17,13 +17,12 @@
       <span>Chart Review Lab</span>
     </a>
     <nav aria-label="Primary navigation">
-      <a href="#intent">Intent</a>
-      <a href="#integration">Integration</a>
+      <a href="#demo">Demo</a>
+      <a href="#workflow">Workflow</a>
       <a href="/prototype">Prototype</a>
-      <a href="/widget-demo">Widget demo</a>
-      <a href="/advanced-charts">Advanced Charts</a>
+      <a href="/widget-demo">Widget view</a>
       <a href="/evidence">Evidence</a>
-      <a href="#boundaries">Boundaries</a>
+      <a href="#boundaries">Boundary</a>
       <a href="#contact">Contact</a>
     </nav>
   </header>
@@ -72,79 +71,80 @@
       </svg>
 
       <div class="hero-copy">
-        <p class="eyebrow">Public Advanced Charts integration request</p>
+        <p class="eyebrow">Live chart-review demo</p>
         <h1 id="page-title">Chart Review Lab</h1>
         <p class="hero-text">
-          A public chart-review workspace for annotating market structure with official TradingView drawing APIs:
-          levels, range boxes, Fib-style references, projection lines, and review labels.
+          Inspect Alpaca-backed candles, deterministic chart annotations, source metadata, and exportable evidence
+          artifacts in a public review workspace.
         </p>
         <div class="hero-actions" aria-label="Primary links">
-          <a class="button primary" href="#integration">Integration plan</a>
-          <a class="button secondary" href="/prototype">Annotation prototype</a>
-          <a class="button secondary" href="/widget-demo">Widget fallback</a>
-          <a class="button secondary" href="/advanced-charts">Adapter scaffold</a>
-          <a class="button secondary" href="/evidence">Evidence handoff</a>
-          <a class="button secondary" href="https://github.com/DylanMcCavitt">GitHub profile</a>
+          <a class="button primary" href="/prototype">Open annotation demo</a>
+          <a class="button secondary" href="/evidence">Review evidence</a>
+          <a class="button secondary" href="/api/datafeed/status">Datafeed status</a>
+        </div>
+        <div class="hero-status-row" aria-label="Demo proof points">
+          <span>Alpaca SIP datafeed</span>
+          <span>Inspectable JSON</span>
+          <span>Visible attribution</span>
+          <span>Chart review only</span>
         </div>
       </div>
     </section>
 
-    <section id="intent" class="band light" aria-labelledby="intent-title">
+    <section id="demo" class="band light" aria-labelledby="demo-title">
       <div class="content two-column">
         <div>
-          <p class="eyebrow">Use case</p>
-          <h2 id="intent-title">Public chart-review annotations</h2>
+          <p class="eyebrow">Working demo</p>
+          <h2 id="demo-title">A public evidence bench for chart review</h2>
           <p>
-            This project is intended to be a publicly available chart-review and visualization tool. The application
-            will render charts, attach visual review evidence, and let users inspect why levels or annotations are
-            present.
+            The demo renders market data, draws deterministic review overlays, and exposes the values behind each
+            annotation. It is built for inspection: labels stay visible, metadata is readable, and artifacts can be
+            copied or exported.
           </p>
         </div>
         <div class="facts" aria-label="Project facts">
           <div>
-            <span>Product requested</span>
-            <strong>TradingView Advanced Charts</strong>
+            <span>Datafeed</span>
+            <strong>Alpaca UDF endpoint</strong>
           </div>
           <div>
-            <span>Primary API need</span>
-            <strong>Official drawing methods</strong>
+            <span>Review layer</span>
+            <strong>Visible annotations</strong>
           </div>
           <div>
-            <span>Availability</span>
-            <strong>Public implementation</strong>
+            <span>Evidence</span>
+            <strong>JSON and source metadata</strong>
           </div>
           <div>
-            <span>TradingView attribution</span>
-            <strong>Visible and retained</strong>
+            <span>Boundary</span>
+            <strong>No advisory workflow</strong>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="integration" class="band" aria-labelledby="integration-title">
+    <section id="workflow" class="band" aria-labelledby="workflow-title">
       <div class="content">
-        <p class="eyebrow">Integration plan</p>
-        <h2 id="integration-title">Advanced Charts with an owned datafeed</h2>
+        <p class="eyebrow">Workflow</p>
+        <h2 id="workflow-title">Chart data, annotations, and source evidence in one path</h2>
         <div class="implementation-grid">
           <article>
-            <h3>Chart library</h3>
+            <h3>Candles</h3>
             <p>
-              Use the self-hosted Advanced Charts library in a public web application with the required TradingView
-              attribution visible.
-            </p>
-          </article>
-          <article>
-            <h3>Datafeed</h3>
-            <p>
-              Connect the chart through a dedicated backend UDF adapter backed by Alpaca Market Data with keys stored
+              Browser requests go through Chart Review Lab's UDF endpoints, with Alpaca Market Data keys kept
               server-side.
             </p>
           </article>
           <article>
-            <h3>Drawing API</h3>
+            <h3>Annotations</h3>
             <p>
-              Use official methods such as <code>createShape</code>, <code>createMultipointShape</code>,
-              <code>getAllShapes</code>, and <code>removeEntity</code> for review annotations.
+              The review layer draws explicit levels, ranges, Fib-style references, projection guides, and labels.
+            </p>
+          </article>
+          <article>
+            <h3>Inspector</h3>
+            <p>
+              Each selected annotation shows values, basis, endpoint, feed, latest bar, and generated JSON.
             </p>
           </article>
           <article>
@@ -156,21 +156,21 @@
         </div>
         <div class="datafeed-panel" aria-label="Datafeed endpoints">
           <div>
-            <h3>Working datafeed URL</h3>
+            <h3>Live datafeed base</h3>
             <p>
-              Advanced Charts can point its UDF adapter at
-              <code>https://chartreviewlab.company/api/datafeed</code>.
+              The public demo reads from <code>https://chartreviewlab.company/api/datafeed</code> and keeps provider
+              caveats visible wherever chart data appears.
             </p>
           </div>
           <div class="datafeed-links">
             <a href="/api/datafeed/status">Datafeed status</a>
             <a href="/prototype">Annotation prototype</a>
-            <a href="/widget-demo">Widget fallback demo</a>
-            <a href="/advanced-charts">Advanced Charts scaffold</a>
-            <a href="/evidence">Evidence artifact handoff</a>
+            <a href="/widget-demo">TradingView widget view</a>
+            <a href="/evidence">Evidence report</a>
             <a href="/api/datafeed/config">UDF config</a>
             <a href="/api/datafeed/search?query=NVDA">Symbol search</a>
             <a href="/api/datafeed/symbols?symbol=NASDAQ:NVDA">Symbol metadata</a>
+            <a href="/docs/advanced-charts-readiness.md">Readiness notes</a>
           </div>
         </div>
       </div>
@@ -200,8 +200,10 @@
           </p>
         </div>
         <div class="contact-links" aria-label="Contact links">
+          <a href="/prototype">Open the annotation demo</a>
+          <a href="/evidence">Review the evidence report</a>
+          <a href="/api/datafeed/status">Check datafeed status</a>
           <a href="https://github.com/DylanMcCavitt">GitHub: DylanMcCavitt</a>
-          <a href="https://www.tradingview.com/advanced-charts/">TradingView Advanced Charts request page</a>
           <a href="https://www.tradingview.com/charting-library-docs/latest/ui_elements/drawings/drawings-api/">Drawing API documentation</a>
         </div>
       </div>
@@ -210,8 +212,8 @@
 
   <footer>
     <p>
-      Chart Review Lab is an independent public integration request prototype. TradingView is a registered trademark
-      of TradingView, Inc. Attribution will remain visible in the final Advanced Charts implementation.
+      Chart Review Lab is an independent public chart-review demo. TradingView is a registered trademark of
+      TradingView, Inc. Attribution remains visible where TradingView chart surfaces appear.
     </p>
   </footer>
 </body>
