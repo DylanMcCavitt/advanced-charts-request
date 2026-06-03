@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Widget Demo | Chart Review Lab</title>
+  <meta
+    name="description"
+    content="TradingView widget fallback demo for Chart Review Lab while Advanced Charts access is pending."
+  >
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="workspace-page">
+  <header class="workspace-topbar" aria-label="Widget demo status">
+    <a class="brand workspace-brand" href="/" aria-label="Chart Review Lab home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>Chart Review Lab</span>
+    </a>
+    <div class="status-strip" aria-label="Integration status">
+      <span class="status-pill ok">Alpaca datafeed ok</span>
+      <span class="status-pill pending">Advanced Charts pending</span>
+      <span class="status-pill neutral">Widget fallback</span>
+    </div>
+  </header>
+
+  <main class="widget-shell" aria-labelledby="widget-title">
+    <section class="widget-intro">
+      <div>
+        <p class="eyebrow">Fallback path</p>
+        <h1 id="widget-title">TradingView widget demo</h1>
+        <p>
+          This page shows the public widget option if Advanced Charts approval takes longer than expected.
+          It preserves TradingView chart rendering and attribution while keeping Chart Review Lab's review
+          boundary visible.
+        </p>
+      </div>
+      <div class="route-links" aria-label="Related routes">
+        <a href="/">Main page</a>
+        <a href="/api/datafeed/status">Alpaca datafeed status</a>
+      </div>
+    </section>
+
+    <section class="widget-workspace" aria-label="Widget review bench">
+      <aside class="workspace-panel control-panel" aria-label="Widget controls">
+        <div class="panel-section">
+          <span class="panel-label">Symbol</span>
+          <strong>NASDAQ:NVDA</strong>
+        </div>
+        <div class="panel-section">
+          <span class="panel-label">Chart source</span>
+          <strong>TradingView public widget</strong>
+        </div>
+        <div class="panel-section">
+          <span class="panel-label">Fallback use</span>
+          <p>
+            Public chart display with built-in symbol, interval, and style controls.
+          </p>
+        </div>
+        <div class="mode-grid" aria-label="Review tools unavailable in widget mode">
+          <span>Levels</span>
+          <span>Ranges</span>
+          <span>Labels</span>
+          <span>Inspect</span>
+        </div>
+      </aside>
+
+      <div class="widget-stage">
+        <div class="widget-limitation" role="note">
+          Widget mode can display public TradingView charts, but it does not provide programmable native drawing APIs
+          for Chart Review Lab annotations.
+        </div>
+        <div class="tradingview-widget-container" aria-label="TradingView chart widget">
+          <div class="tradingview-widget-container__widget"></div>
+          <div class="tradingview-widget-copyright">
+            <a href="https://www.tradingview.com/" rel="noopener nofollow" target="_blank">
+              Charts by TradingView
+            </a>
+          </div>
+          <script
+            type="text/javascript"
+            src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js"
+            async
+          >
+          {
+            "autosize": true,
+            "width": "100%",
+            "height": "100%",
+            "symbol": "NASDAQ:NVDA",
+            "interval": "D",
+            "timezone": "America/New_York",
+            "theme": "light",
+            "style": "1",
+            "locale": "en",
+            "hide_top_toolbar": false,
+            "allow_symbol_change": true,
+            "calendar": false,
+            "support_host": "https://www.tradingview.com"
+          }
+          </script>
+        </div>
+      </div>
+
+      <aside class="workspace-panel evidence-panel" aria-label="Fallback evidence">
+        <div class="panel-section">
+          <span class="panel-label">Supports</span>
+          <ul>
+            <li>Public TradingView-powered chart display</li>
+            <li>Built-in widget controls and visible attribution</li>
+            <li>Clean fallback page while approval is pending</li>
+          </ul>
+        </div>
+        <div class="panel-section caveat-section">
+          <span class="panel-label">Does not support</span>
+          <p>
+            Official programmable drawing methods such as shape creation, annotation inspection,
+            and annotation JSON export are Advanced Charts capabilities, not widget capabilities.
+          </p>
+        </div>
+        <div class="panel-section source-section">
+          <span class="panel-label">Source caveat</span>
+          <p>
+            This widget uses TradingView public widget data. The Alpaca UDF datafeed remains available for the
+            planned Advanced Charts integration.
+          </p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Chart Review Lab is an independent public integration request prototype. TradingView attribution remains visible
+      in widget mode and will remain visible in the final Advanced Charts implementation.
+    </p>
+  </footer>
+</body>
+</html>
