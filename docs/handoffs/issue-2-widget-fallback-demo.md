@@ -2,11 +2,11 @@
 
 ## Status
 
-Implemented `/widget-demo` as a public static fallback page using the TradingView public Advanced Chart widget embed for `NASDAQ:NVDA`. The page matches the Evidence Bench direction with a compact status bar, control panel, central chart stage, evidence/caveat panel, and visible TradingView attribution.
+Complete and merged in PR #7. `/widget-demo` is a public static fallback page using the TradingView public Advanced Chart widget embed for `NASDAQ:NVDA`. The page matches the Evidence Bench direction with a compact status bar, control panel, central chart stage, evidence/caveat panel, and visible TradingView attribution.
 
 ## Next
 
-Push the branch, open PR, deploy, verify the production `/widget-demo` clean URL, then merge if checks are clean.
+No issue #2 follow-up is pending. Continue the issue chain with the lowest-numbered remaining open issue.
 
 ## Risks
 
@@ -25,6 +25,7 @@ Push the branch, open PR, deploy, verify the production `/widget-demo` clean URL
 
 - `git diff --check`
 - `curl -I http://localhost:4173/widget-demo` returned `200 OK` through `vercel dev --listen 4173`
+- `curl -I https://chartreviewlab.company/widget-demo` returned `200 OK` after merge
 - `curl -sS https://chartreviewlab.company/api/datafeed/status` returned `ok: true`, `feed: "sip"`
 - Text scan of `widget-demo.html` for prohibited trading-product terms found no matches
 - Playwright screenshot check waited for `.tradingview-widget-container iframe` on desktop and mobile
