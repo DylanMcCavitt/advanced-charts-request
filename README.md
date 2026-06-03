@@ -1,6 +1,6 @@
 # Chart Review Lab
 
-Public chart-review demo with Alpaca-backed datafeed endpoints, Lightweight Charts rendering, local annotation artifacts, and visible source caveats.
+Public chart-review artifact viewer with Alpaca-backed datafeed endpoints, Lightweight Charts rendering, deterministic local annotation artifacts, and visible source caveats.
 
 Public site:
 
@@ -10,13 +10,15 @@ https://chartreviewlab.company
 
 Routes:
 
-- `/` public chart-review demo page
-- `/widget-demo` public TradingView widget view
-- `/prototype` Alpaca-backed Lightweight Charts annotation workspace
+- `/` public chart-review contract and demo page
+- `/widget-demo` public TradingView widget comparison view
+- `/prototype` Alpaca-backed Lightweight Charts artifact-review workspace
 - `/advanced-charts` archived Advanced Charts decision page
 - `/evidence` public evidence report with page proof points, caveats, and validation links
 
 TradingView declined Advanced Charts for personal use. Chart Review Lab now treats the open-source Lightweight Charts path as the primary implementation and keeps `/advanced-charts` only as a decision record. This site must not include any TradingView private library code.
+
+See `CONTEXT.md` for the product contract, repo boundary, ownership split with TradingView MCP and upstream artifact writers, and the post-pivot viewer flow.
 
 See `docs/advanced-charts-readiness.md` for the pivot decision, Lightweight Charts route contract, and historical adapter notes.
 

@@ -4,6 +4,8 @@
 
 TradingView declined Advanced Charts for personal use on June 3, 2026. Chart Review Lab now treats Lightweight Charts as the primary renderer path for the public chart-review workspace.
 
+`CONTEXT.md` is the durable product-contract and repo-boundary document. This file stays focused on the Advanced Charts decision, the Lightweight Charts pivot, and the historical adapter boundary.
+
 This repository does not include private TradingView library files, copied charting library bundles, licensed Advanced Charts assets, broker integrations, order-routing code, or account-state workflows.
 
 Primary public routes:
