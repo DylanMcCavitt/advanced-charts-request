@@ -15,6 +15,15 @@ docs/fixtures/review_artifact_v1_nvda_daily.json
 docs/fixtures/review_artifact_v1_spy_hourly.json
 ```
 
+Viewer load links:
+
+```text
+/prototype?artifactUrl=/docs/fixtures/review_artifact_v1_nvda_daily.json
+/prototype?artifact=spy-hourly
+```
+
+`artifactUrl` accepts an HTTP(S) URL or same-site path that returns JSON. The static `artifact` selector is reserved for known public fixtures. The viewer rejects script URLs, credentialed URLs, and secret-looking query values before fetching.
+
 ## Required Shape
 
 - `kind`: always `review_artifact_v1`

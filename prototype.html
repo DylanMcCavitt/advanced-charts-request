@@ -72,6 +72,28 @@
           </div>
         </div>
 
+        <div class="panel-section artifact-load-section">
+          <span class="panel-label">Review artifact</span>
+          <select id="artifact-select" class="field-control" aria-label="Static review artifact">
+            <option value="">Live datafeed mode</option>
+            <option value="/docs/fixtures/review_artifact_v1_nvda_daily.json">NVDA daily fixture</option>
+            <option value="/docs/fixtures/review_artifact_v1_spy_hourly.json">SPY hourly fixture</option>
+          </select>
+          <label class="sr-only" for="artifact-url">Review artifact URL</label>
+          <input
+            id="artifact-url"
+            class="field-control artifact-url-field"
+            type="url"
+            inputmode="url"
+            placeholder="/docs/fixtures/review_artifact_v1_nvda_daily.json"
+          >
+          <div class="artifact-load-actions">
+            <button type="button" id="load-artifact" class="secondary-action">Load artifact</button>
+            <button type="button" id="return-datafeed" class="secondary-action">Live datafeed</button>
+          </div>
+          <p class="field-help">Artifacts are fetched as JSON only. Market-data credentials stay server-side.</p>
+        </div>
+
         <div class="panel-section">
           <span class="panel-label">Annotation view</span>
           <div class="annotation-tool-grid" role="group" aria-label="Annotation filters">
