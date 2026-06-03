@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Annotation Prototype | Chart Review Lab</title>
+  <meta
+    name="description"
+    content="Alpaca-backed Lightweight Charts annotation prototype for Chart Review Lab while Advanced Charts access is pending."
+  >
+  <link rel="stylesheet" href="styles.css">
+  <script
+    src="https://unpkg.com/lightweight-charts@4.2.3/dist/lightweight-charts.standalone.production.js"
+    defer
+  ></script>
+  <script src="prototype.js" defer></script>
+</head>
+<body class="workspace-page prototype-page">
+  <header class="workspace-topbar" aria-label="Prototype status">
+    <a class="brand workspace-brand" href="/" aria-label="Chart Review Lab home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>Chart Review Lab</span>
+    </a>
+    <div class="status-strip" aria-label="Integration status">
+      <span id="feed-status-pill" class="status-pill neutral">Checking datafeed</span>
+      <span class="status-pill pending">Advanced Charts pending</span>
+      <span class="status-pill neutral">Local renderer</span>
+    </div>
+  </header>
+
+  <main class="prototype-shell" aria-labelledby="prototype-title">
+    <section class="prototype-intro">
+      <div>
+        <p class="eyebrow">Evidence Bench</p>
+        <h1 id="prototype-title">Alpaca annotation prototype</h1>
+        <p>
+          A local chart renderer for explicit chart-review overlays, inspectable values, and source metadata while
+          Advanced Charts access is pending.
+        </p>
+      </div>
+      <div class="route-links" aria-label="Related routes">
+        <a href="/">Main page</a>
+        <a href="/widget-demo">Widget fallback</a>
+        <a href="/api/datafeed/status">Datafeed status</a>
+      </div>
+    </section>
+
+    <section class="prototype-workspace" aria-label="Prototype review bench">
+      <aside class="workspace-panel prototype-controls" aria-label="Chart controls">
+        <div class="panel-section">
+          <label class="panel-label" for="symbol-select">Symbol</label>
+          <select id="symbol-select" class="field-control">
+            <option value="NASDAQ:NVDA">NASDAQ:NVDA</option>
+            <option value="NASDAQ:AMD">NASDAQ:AMD</option>
+            <option value="NASDAQ:AAPL">NASDAQ:AAPL</option>
+            <option value="NASDAQ:MSFT">NASDAQ:MSFT</option>
+            <option value="NYSE:SPY">NYSE:SPY</option>
+            <option value="NASDAQ:QQQ">NASDAQ:QQQ</option>
+          </select>
+          <p class="field-help">Fixed review set. Browser requests use only server-side UDF endpoints.</p>
+        </div>
+
+        <div class="panel-section">
+          <span class="panel-label">Timeframe</span>
+          <div class="segmented-control" role="group" aria-label="Timeframe">
+            <button type="button" class="segmented-button active" data-resolution="D">Daily</button>
+            <button type="button" class="segmented-button" data-resolution="60">1H</button>
+            <button type="button" class="segmented-button" data-resolution="15">15M</button>
+            <button type="button" class="segmented-button" data-resolution="W">Weekly</button>
+          </div>
+        </div>
+
+        <div class="panel-section">
+          <span class="panel-label">Annotation view</span>
+          <div class="annotation-tool-grid" role="group" aria-label="Annotation filters">
+            <button type="button" class="tool-button active" data-filter="all">
+              <span class="tool-icon all-icon" aria-hidden="true"></span>
+              All
+            </button>
+            <button type="button" class="tool-button" data-filter="levels">
+              <span class="tool-icon level-icon" aria-hidden="true"></span>
+              Levels
+            </button>
+            <button type="button" class="tool-button" data-filter="range">
+              <span class="tool-icon range-icon" aria-hidden="true"></span>
+              Range
+            </button>
+            <button type="button" class="tool-button" data-filter="fib">
+              <span class="tool-icon fib-icon" aria-hidden="true"></span>
+              Fib
+            </button>
+            <button type="button" class="tool-button" data-filter="projection">
+              <span class="tool-icon projection-icon" aria-hidden="true"></span>
+              Projection
+            </button>
+            <button type="button" class="tool-button" data-filter="labels">
+              <span class="tool-icon label-icon" aria-hidden="true"></span>
+              Labels
+            </button>
+          </div>
+          <button type="button" id="clear-annotations" class="secondary-action">Clear overlay</button>
+        </div>
+
+        <div class="panel-section source-section">
+          <span class="panel-label">Renderer</span>
+          <p>
+            Lightweight Charts by TradingView renders the candles. Chart Review Lab draws local SVG review artifacts
+            above the chart.
+          </p>
+        </div>
+      </aside>
+
+      <section class="prototype-stage" aria-label="Chart">
+        <div class="stage-meta">
+          <div>
+            <span class="panel-label">Source</span>
+            <strong id="chart-source-label">/api/datafeed/history</strong>
+          </div>
+          <div>
+            <span class="panel-label">Latest bar</span>
+            <strong id="latest-bar-label">Waiting for data</strong>
+          </div>
+          <div>
+            <span class="panel-label">Review window</span>
+            <strong id="review-window-label">Not loaded</strong>
+          </div>
+        </div>
+
+        <div class="chart-frame">
+          <div id="prototype-chart" class="prototype-chart" aria-label="Candlestick chart"></div>
+          <svg id="annotation-overlay" class="annotation-overlay" aria-hidden="true"></svg>
+          <div id="chart-state" class="chart-state" role="status" aria-live="polite">
+            <div class="state-skeleton">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <strong>Loading Alpaca-backed candles</strong>
+            <p>Fetching OHLCV through the existing server-side UDF datafeed.</p>
+          </div>
+        </div>
+
+        <div class="chart-footnote">
+          <span>Data path: browser to Chart Review Lab UDF endpoint to Alpaca Market Data.</span>
+          <span>Review overlays are deterministic artifacts for inspection only.</span>
+        </div>
+      </section>
+
+      <aside class="workspace-panel prototype-evidence" aria-label="Annotation evidence">
+        <div class="panel-section selected-evidence">
+          <span class="panel-label">Selected annotation</span>
+          <h2 id="selected-annotation-title">Waiting for annotation set</h2>
+          <p id="selected-annotation-summary">
+            Load a symbol and timeframe to inspect deterministic review artifacts.
+          </p>
+          <dl id="selected-annotation-values" class="value-grid"></dl>
+        </div>
+
+        <div class="panel-section">
+          <span class="panel-label">Annotation set</span>
+          <div id="annotation-list" class="annotation-list"></div>
+        </div>
+
+        <div class="panel-section">
+          <span class="panel-label">Source metadata</span>
+          <dl id="source-metadata" class="source-metadata"></dl>
+        </div>
+
+        <div class="panel-section">
+          <span class="panel-label">Annotation JSON</span>
+          <pre id="annotation-json" class="json-panel">{}</pre>
+          <div class="artifact-actions" aria-label="Artifact actions">
+            <button type="button" id="copy-json" class="secondary-action">Copy JSON</button>
+            <button type="button" id="download-json" class="secondary-action">Download JSON</button>
+            <button type="button" id="download-chart" class="secondary-action">Chart image</button>
+            <button type="button" id="copy-source" class="secondary-action">Copy source</button>
+          </div>
+        </div>
+
+        <div class="panel-section caveat-section">
+          <span class="panel-label">Boundary</span>
+          <p>
+            This prototype is a visual review workspace. It produces inspectable chart artifacts only; it does not
+            choose symbols, score outcomes, manage accounts, or perform transactions.
+          </p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      Chart Review Lab uses Alpaca Market Data through server-side endpoints and the open-source Lightweight Charts
+      renderer by TradingView. Advanced Charts access remains pending.
+    </p>
+  </footer>
+</body>
+</html>
