@@ -1,6 +1,6 @@
 # Chart Review Lab
 
-Public chart-review demo with Alpaca-backed datafeed endpoints, annotation artifacts, and Advanced Charts readiness notes.
+Public chart-review demo with Alpaca-backed datafeed endpoints, Lightweight Charts rendering, local annotation artifacts, and visible source caveats.
 
 Public site:
 
@@ -12,28 +12,13 @@ Routes:
 
 - `/` public chart-review demo page
 - `/widget-demo` public TradingView widget view
-- `/prototype` Alpaca-backed Lightweight Charts annotation prototype
-- `/advanced-charts` guarded Advanced Charts adapter scaffold while approval is pending
+- `/prototype` Alpaca-backed Lightweight Charts annotation workspace
+- `/advanced-charts` archived Advanced Charts decision page
 - `/evidence` public evidence report with page proof points, caveats, and validation links
 
-Suggested form values:
+TradingView declined Advanced Charts for personal use. Chart Review Lab now treats the open-source Lightweight Charts path as the primary implementation and keeps `/advanced-charts` only as a decision record. This site must not include any TradingView private library code.
 
-- Company name: `Dylan McCavitt / Independent Developer`
-- Website URL for the integration: use the deployed URL for this site.
-- Link to GitHub profile: `https://github.com/DylanMcCavitt`
-- Is your website live?: `Yes` after deployment succeeds.
-- Company profile: choose the closest available option to analytics, fintech, or other.
-- Job title: `Independent Developer`
-- Do you have your own data feed?: use `Yes` after the Alpaca env vars below are configured and `/api/datafeed/status` reports `ok: true`.
-- Reason:
-
-```text
-Public chart-review app with Alpaca UDF datafeed and official drawings API for levels, boxes, labels. No orders/trading.
-```
-
-This site should not include any TradingView private library code.
-
-See `docs/advanced-charts-readiness.md` for post-approval setup steps and adapter contracts.
+See `docs/advanced-charts-readiness.md` for the pivot decision, Lightweight Charts route contract, and historical adapter notes.
 
 ## Alpaca Datafeed
 

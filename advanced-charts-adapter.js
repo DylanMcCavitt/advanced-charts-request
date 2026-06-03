@@ -2,7 +2,7 @@
   "use strict";
 
   const DATAFEED_BASE_URL = "/api/datafeed";
-  const LIBRARY_STATUS = "pending_tradingview_approval";
+  const LIBRARY_STATUS = "declined_for_personal_use";
   const REQUIRED_DRAWING_METHODS = Object.freeze([
     "createShape",
     "createMultipointShape",
@@ -83,7 +83,9 @@
 
   function createPendingAdvancedChartsAdapter() {
     const pending = () => {
-      throw new Error("TradingView Advanced Charts access is pending; no private library is loaded.");
+      throw new Error(
+        "TradingView Advanced Charts is not available for this personal-use project; no private library is loaded."
+      );
     };
 
     return {

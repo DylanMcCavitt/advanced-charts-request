@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Annotation Prototype | Chart Review Lab</title>
+  <title>Lightweight Charts Demo | Chart Review Lab</title>
   <meta
     name="description"
-    content="Alpaca-backed Lightweight Charts annotation demo for Chart Review Lab with inspectable evidence artifacts."
+    content="Alpaca-backed Lightweight Charts annotation workspace for Chart Review Lab with inspectable evidence artifacts."
   >
   <link rel="stylesheet" href="styles.css">
   <script
@@ -23,19 +23,19 @@
     </a>
     <div class="status-strip" aria-label="Integration status">
       <span id="feed-status-pill" class="status-pill neutral">Checking datafeed</span>
-      <span class="status-pill neutral">Evidence workspace</span>
-      <span class="status-pill neutral">Local review layer</span>
+      <span class="status-pill ok">Lightweight Charts renderer</span>
+      <span class="status-pill neutral">Local SVG review layer</span>
     </div>
   </header>
 
   <main class="prototype-shell" aria-labelledby="prototype-title">
     <section class="prototype-intro">
       <div>
-        <p class="eyebrow">Evidence Bench</p>
-        <h1 id="prototype-title">Alpaca annotation demo</h1>
+        <p class="eyebrow">Primary chart path</p>
+        <h1 id="prototype-title">Lightweight Charts annotation demo</h1>
         <p>
-          A chart-review workspace for explicit overlays, inspectable values, source metadata, and exportable
-          evidence artifacts.
+          A chart-review workspace for explicit overlays, inspectable values, source metadata, and exportable evidence
+          artifacts using TradingView's open-source Lightweight Charts renderer.
         </p>
       </div>
       <div class="route-links" aria-label="Related routes">
@@ -46,7 +46,7 @@
       </div>
     </section>
 
-    <section class="prototype-workspace" aria-label="Prototype review bench">
+    <section class="prototype-workspace" aria-label="Lightweight Charts review bench">
       <aside class="workspace-panel prototype-controls" aria-label="Chart controls">
         <div class="panel-section">
           <label class="panel-label" for="symbol-select">Symbol</label>
@@ -106,7 +106,7 @@
           <span class="panel-label">Renderer</span>
           <p>
             Lightweight Charts by TradingView renders the candles. Chart Review Lab draws local SVG review artifacts
-            above the chart.
+            above the chart, so the open-source renderer remains the primary supported path.
           </p>
         </div>
       </aside>
@@ -181,7 +181,7 @@
         <div class="panel-section caveat-section">
           <span class="panel-label">Boundary</span>
           <p>
-            This prototype is a visual review workspace. It produces inspectable chart artifacts only; it does not
+            This workspace is a visual review surface. It produces inspectable chart artifacts only; it does not
             choose symbols, score outcomes, manage accounts, or perform transactions.
           </p>
         </div>
