@@ -3,3 +3,4 @@ vendor/tradingview/
 charting_library/
 datafeeds/
 .tradingview/
+.env*.local

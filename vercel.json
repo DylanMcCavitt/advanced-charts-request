@@ -1,5 +1,22 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/docs/advanced-charts-readiness.md",
+      "destination": "/evidence",
+      "permanent": false
+    },
+    {
+      "source": "/docs/design/chart-review-lab-visual-brief.md",
+      "destination": "/evidence",
+      "permanent": false
+    },
+    {
+      "source": "/docs/handoffs/:path*",
+      "destination": "/evidence",
+      "permanent": false
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
