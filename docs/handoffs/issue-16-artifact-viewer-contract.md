@@ -6,9 +6,11 @@ Defined the post-pivot Chart Review Lab product contract and repo boundary in du
 
 Updated `README.md` so the public repo summary points readers to the new contract doc, and clarified in `docs/advanced-charts-readiness.md` that the readiness document remains the pivot decision record rather than the primary product-boundary spec.
 
+PR #22 is open against `feat/issue-14-lightweight-charts-pivot`.
+
 ## Next
 
-Push branch `feat/issue-16-artifact-viewer-contract`, open the PR against `feat/issue-14-lightweight-charts-pivot` while PR #15 remains open, then merge or retarget to `main` if PR #15 lands first and local `main` is synced.
+Review and merge PR #22 into `feat/issue-14-lightweight-charts-pivot` while PR #15 remains open, or retarget #22 to `main` if PR #15 lands first and local `main` is synced.
 
 After merge, verify the public docs and route framing still match the contract, then continue the issue chain with the next ready issue.
 
