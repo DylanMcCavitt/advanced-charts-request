@@ -537,11 +537,37 @@ p {
   font-weight: 800;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
 .field-help,
 .muted-note {
   margin-top: 8px;
   color: var(--muted);
   font-size: 13px;
+}
+
+.artifact-load-section {
+  display: grid;
+  gap: 8px;
+}
+
+.artifact-url-field {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.artifact-load-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
 }
 
 .segmented-control {
@@ -774,6 +800,10 @@ p {
   background: rgba(255, 247, 245, 0.94);
 }
 
+.chart-state[data-state="unsupported"] {
+  background: rgba(255, 247, 245, 0.94);
+}
+
 .chart-state[data-state="empty"] {
   background: rgba(248, 250, 252, 0.94);
 }
@@ -824,6 +854,7 @@ p {
 }
 
 .chart-state[data-state="error"] .state-skeleton,
+.chart-state[data-state="unsupported"] .state-skeleton,
 .chart-state[data-state="empty"] .state-skeleton,
 .chart-state[data-state="stale"] .state-skeleton {
   display: none;
@@ -1489,6 +1520,10 @@ footer p {
     grid-column: 1 / -1;
   }
 
+  .artifact-load-section {
+    grid-column: 1 / -1;
+  }
+
   .annotation-tool-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -1572,6 +1607,17 @@ footer p {
     padding: 22px 16px 32px;
   }
 
+  .prototype-page {
+    width: 100vw;
+    overflow-x: hidden;
+  }
+
+  .prototype-page .prototype-shell {
+    width: 100vw;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+
   .evidence-shell {
     padding: 22px 16px 32px;
   }
@@ -1607,6 +1653,77 @@ footer p {
 
   .prototype-intro {
     gap: 16px;
+  }
+
+  .prototype-page .prototype-intro,
+  .prototype-page .prototype-workspace,
+  .prototype-page .route-links,
+  .prototype-page .workspace-panel,
+  .prototype-page .prototype-stage {
+    min-width: 0;
+    width: calc(100vw - 32px);
+    max-width: calc(100vw - 32px);
+  }
+
+  .prototype-page .prototype-intro > *,
+  .prototype-page .prototype-workspace > *,
+  .prototype-page .panel-section,
+  .prototype-page .stage-meta > *,
+  .prototype-page .segmented-control > *,
+  .prototype-page .annotation-tool-grid > *,
+  .prototype-page .artifact-load-actions > * {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .prototype-page .prototype-intro > div {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .prototype-page .prototype-intro h1,
+  .prototype-page .prototype-intro p,
+  .prototype-page .panel-section p {
+    width: 100%;
+    max-width: calc(100vw - 88px);
+    overflow-wrap: normal;
+    white-space: normal;
+    word-break: normal;
+  }
+
+  .prototype-page .prototype-intro h1 {
+    font-size: 26px;
+    line-height: 1.05;
+  }
+
+  .prototype-page .prototype-intro p,
+  .prototype-page .panel-section p {
+    max-width: calc(100vw - 120px);
+  }
+
+  .prototype-page .route-links {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .prototype-page .route-links a,
+  .prototype-page .field-control,
+  .prototype-page .secondary-action,
+  .prototype-page .tool-button {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .prototype-page .artifact-url-field {
+    text-overflow: ellipsis;
+  }
+
+  .prototype-page .segmented-control,
+  .prototype-page .annotation-tool-grid,
+  .prototype-page .artifact-load-actions {
+    grid-template-columns: 1fr;
+    max-width: 100%;
   }
 
   .advanced-intro h1 {
@@ -1652,7 +1769,7 @@ footer p {
   }
 
   .annotation-tool-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
   .stage-meta {
@@ -1674,6 +1791,10 @@ footer p {
   }
 
   .artifact-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .artifact-load-actions {
     grid-template-columns: 1fr;
   }
 

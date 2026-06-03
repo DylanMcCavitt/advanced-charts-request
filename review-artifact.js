@@ -60,6 +60,60 @@
   const SECRET_FIELD_PATTERN = /(secret|token|credential|api[_-]?key|key[_-]?id)/i;
   const SECRET_VALUE_PATTERN = /([?&](key|token|secret|api_key|api-key|apikey)=|apca-api-key-id|apca-api-secret-key)/i;
 
+  function selectReviewArtifactSource(search, currentHref, staticArtifacts = {}) {
+    const params = search instanceof URLSearchParams
+      ? search
+      : new URLSearchParams(String(search || "").replace(/^\?/, ""));
+    const artifactUrl = (params.get("artifactUrl") || "").trim();
+    const artifactKey = (params.get("artifact") || "").trim();
+
+    if (artifactUrl) {
+      const resolved = resolveReviewArtifactUrl(artifactUrl, currentHref);
+      return resolved.valid
+        ? { mode: "artifact", sourceType: "url", url: resolved.url, label: artifactUrl }
+        : { mode: "error", error: resolved.error };
+    }
+
+    if (artifactKey) {
+      const fixtureUrl = staticArtifacts[artifactKey];
+      if (!fixtureUrl) {
+        return { mode: "error", error: `Unknown review artifact selector: ${artifactKey}.` };
+      }
+      const resolved = resolveReviewArtifactUrl(fixtureUrl, currentHref);
+      return resolved.valid
+        ? { mode: "artifact", sourceType: "selector", url: resolved.url, label: artifactKey }
+        : { mode: "error", error: resolved.error };
+    }
+
+    return { mode: "datafeed" };
+  }
+
+  function resolveReviewArtifactUrl(input, currentHref) {
+    const value = String(input || "").trim();
+    if (!value) {
+      return { valid: false, error: "Artifact URL is required." };
+    }
+
+    let url;
+    try {
+      url = new URL(value, currentHref || "https://chartreviewlab.company/prototype");
+    } catch {
+      return { valid: false, error: "Artifact URL must be an http(s) URL or same-site path." };
+    }
+
+    if (url.protocol !== "https:" && url.protocol !== "http:") {
+      return { valid: false, error: "Artifact URL must use http or https." };
+    }
+    if (url.username || url.password) {
+      return { valid: false, error: "Artifact URL must not include credentials." };
+    }
+    if (SECRET_VALUE_PATTERN.test(url.search)) {
+      return { valid: false, error: "Artifact URL must not include tokens, keys, or secret query values." };
+    }
+
+    return { valid: true, url: url.href };
+  }
+
   function validateReviewArtifact(artifact) {
     const errors = [];
 
@@ -265,6 +319,8 @@
 
   const api = {
     ARTIFACT_KIND,
+    resolveReviewArtifactUrl,
+    selectReviewArtifactSource,
     validateReviewArtifact,
     formatReviewArtifactErrors
   };

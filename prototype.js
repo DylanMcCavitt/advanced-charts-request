@@ -15,10 +15,18 @@
     label: "#121821"
   };
 
+  const STATIC_ARTIFACTS = {
+    "nvda-daily": "/docs/fixtures/review_artifact_v1_nvda_daily.json",
+    "spy-hourly": "/docs/fixtures/review_artifact_v1_spy_hourly.json"
+  };
+
   const state = {
     chart: null,
     series: null,
     resizeObserver: null,
+    mode: "datafeed",
+    artifact: null,
+    artifactSource: null,
     symbol: "NASDAQ:NVDA",
     resolution: "D",
     candles: [],
@@ -46,7 +54,16 @@
     }
 
     createChart();
-    loadData();
+    const requestedArtifact = initialArtifactRequest();
+    if (requestedArtifact.mode === "artifact") {
+      loadArtifact(requestedArtifact.url, requestedArtifact.label);
+    } else if (requestedArtifact.mode === "error") {
+      setChartState("error", "Review artifact could not load", requestedArtifact.error);
+      setFeedStatus("error", "Artifact error");
+      renderAnnotations();
+    } else {
+      loadData();
+    }
   }
 
   function bindDom() {
@@ -55,6 +72,10 @@
     dom.resolutionButtons = Array.from(document.querySelectorAll("[data-resolution]"));
     dom.filterButtons = Array.from(document.querySelectorAll("[data-filter]"));
     dom.clearButton = document.getElementById("clear-annotations");
+    dom.artifactSelect = document.getElementById("artifact-select");
+    dom.artifactUrl = document.getElementById("artifact-url");
+    dom.loadArtifact = document.getElementById("load-artifact");
+    dom.returnDatafeed = document.getElementById("return-datafeed");
     dom.chartContainer = document.getElementById("prototype-chart");
     dom.overlay = document.getElementById("annotation-overlay");
     dom.chartState = document.getElementById("chart-state");
@@ -87,6 +108,21 @@
       });
     });
 
+    dom.artifactSelect.addEventListener("change", () => {
+      dom.artifactUrl.value = dom.artifactSelect.value;
+    });
+
+    dom.loadArtifact.addEventListener("click", () => {
+      const url = (dom.artifactUrl.value || dom.artifactSelect.value || "").trim();
+      loadArtifact(url, url);
+    });
+
+    dom.returnDatafeed.addEventListener("click", () => {
+      dom.artifactSelect.value = "";
+      dom.artifactUrl.value = "";
+      loadData();
+    });
+
     dom.filterButtons.forEach((button) => {
       button.addEventListener("click", () => {
         state.filter = button.dataset.filter;
@@ -103,6 +139,23 @@
     dom.downloadJson.addEventListener("click", downloadJson);
     dom.downloadChart.addEventListener("click", downloadChartImage);
     dom.copySource.addEventListener("click", () => copyText(sourceSummaryText(), dom.copySource, "Copied source"));
+  }
+
+  function initialArtifactRequest() {
+    const validator = window.ChartReviewArtifact;
+    if (!validator?.selectReviewArtifactSource) {
+      return { mode: "datafeed" };
+    }
+    const request = validator.selectReviewArtifactSource(window.location.search, window.location.href, STATIC_ARTIFACTS);
+    if (request.mode === "artifact") {
+      const requestDisplayUrl = displayUrl(request.url);
+      dom.artifactUrl.value = requestDisplayUrl;
+      const matchingOption = Array.from(dom.artifactSelect.options).find((option) => option.value === requestDisplayUrl);
+      if (matchingOption) {
+        dom.artifactSelect.value = matchingOption.value;
+      }
+    }
+    return request;
   }
 
   function createChart() {
@@ -155,12 +208,17 @@
   }
 
   async function loadData() {
+    state.mode = "datafeed";
+    state.artifact = null;
+    state.artifactSource = null;
     setChartState("loading", "Loading Alpaca-backed candles", "Fetching OHLCV through the server-side UDF datafeed.");
     setFeedStatus("neutral", "Loading datafeed");
     state.annotations = [];
     state.selectedId = null;
+    state.filter = "all";
     state.overlayVisible = true;
     state.stale = false;
+    syncFilterButtons();
     drawAnnotations();
     renderAnnotations();
 
@@ -217,6 +275,175 @@
       renderAnnotations();
       drawAnnotations();
     }
+  }
+
+  async function loadArtifact(urlValue, label) {
+    const validator = window.ChartReviewArtifact;
+    const resolved = validator?.resolveReviewArtifactUrl
+      ? validator.resolveReviewArtifactUrl(urlValue, window.location.href)
+      : { valid: false, error: "Review artifact validator is unavailable." };
+
+    if (!resolved.valid) {
+      state.mode = "artifact";
+      state.artifact = null;
+      state.artifactSource = null;
+      state.candles = [];
+      state.annotations = [];
+      state.selectedId = null;
+      state.series.setData([]);
+      setChartState("error", "Review artifact could not load", resolved.error);
+      setFeedStatus("error", "Artifact error");
+      updateStageMeta();
+      renderAnnotations();
+      drawAnnotations();
+      return;
+    }
+
+    state.mode = "artifact";
+    state.artifact = null;
+    state.artifactSource = {
+      url: resolved.url,
+      label: label || resolved.url,
+      loadedAt: new Date().toISOString()
+    };
+    state.candles = [];
+    state.annotations = [];
+    state.selectedId = null;
+    state.overlayVisible = true;
+    state.stale = false;
+    state.statusPayload = null;
+    state.lastEndpoint = displayUrl(resolved.url);
+    dom.chartSourceLabel.textContent = state.lastEndpoint;
+    setChartState("loading", "Loading review artifact", "Fetching and validating review_artifact_v1 JSON.");
+    setFeedStatus("neutral", "Loading artifact");
+    renderAnnotations();
+    drawAnnotations();
+
+    try {
+      const artifact = await fetchJson(resolved.url);
+      if (!artifact || artifact.kind !== "review_artifact_v1") {
+        state.artifact = artifact || null;
+        setChartState("unsupported", "Unsupported artifact version", "Only review_artifact_v1 payloads are supported in this workspace.");
+        setFeedStatus("error", "Unsupported artifact");
+        updateStageMeta();
+        renderAnnotations();
+        return;
+      }
+
+      const result = validator.validateReviewArtifact(artifact);
+      if (!result.valid) {
+        throw new Error(validator.formatReviewArtifactErrors(result.errors));
+      }
+
+      state.artifact = artifact;
+      state.symbol = artifact.symbol;
+      state.resolution = artifact.resolution;
+      syncControlState();
+      const historyUrl = artifactHistoryUrl(artifact);
+      state.lastEndpoint = displayUrl(historyUrl);
+      dom.chartSourceLabel.textContent = state.lastEndpoint;
+
+      const historyPayload = await fetchJson(historyUrl);
+      if (historyPayload.s === "error") {
+        throw new Error(historyPayload.errmsg || "Artifact history URL returned an error.");
+      }
+
+      const candles = parseHistory(historyPayload);
+      state.candles = candles;
+      state.annotations = artifact.annotations.slice();
+      applyArtifactViewerState(artifact);
+      state.stale = Boolean(artifact.candleSource.stale) || isStale(candles.at(-1)?.time);
+
+      if (!candles.length) {
+        state.series.setData([]);
+        updateStageMeta();
+        setChartState("empty", "Artifact history returned no candles", "The artifact is valid, but its public history URL returned an empty candle window.");
+        setFeedStatus("pending", "Artifact empty");
+        renderAnnotations();
+        drawAnnotations();
+        return;
+      }
+
+      state.series.setData(candles);
+      state.chart.timeScale().fitContent();
+      updateStageMeta();
+      renderAnnotations();
+      drawAnnotations();
+
+      if (state.stale) {
+        setChartState("stale", "Artifact candle window is stale", "The loaded artifact remains inspectable, but its candle source is marked stale or older than expected.");
+        setFeedStatus("pending", "Artifact stale");
+      } else {
+        hideChartState();
+        setFeedStatus("ok", "Artifact loaded");
+      }
+    } catch (error) {
+      state.candles = [];
+      state.annotations = [];
+      state.selectedId = null;
+      state.series.setData([]);
+      setChartState("error", "Review artifact rejected", error.message);
+      setFeedStatus("error", "Artifact rejected");
+      updateStageMeta();
+      renderAnnotations();
+      drawAnnotations();
+    }
+  }
+
+  function artifactHistoryUrl(artifact) {
+    const historyUrl = artifact?.dataSource?.historyUrl;
+    if (!historyUrl) {
+      throw new Error("Artifact is missing dataSource.historyUrl.");
+    }
+    const overrideBase = new URLSearchParams(window.location.search).get("datafeedBase");
+    const localDatafeedPrefix = "/api/datafeed";
+    if (overrideBase && historyUrl.startsWith(localDatafeedPrefix)) {
+      const publicPath = historyUrl.slice(localDatafeedPrefix.length);
+      const overrideHistoryUrl = `${overrideBase.replace(/\/+$/, "")}${publicPath}`;
+      const resolvedOverride = window.ChartReviewArtifact.resolveReviewArtifactUrl(
+        overrideHistoryUrl,
+        window.location.href
+      );
+      if (!resolvedOverride.valid) {
+        throw new Error(resolvedOverride.error);
+      }
+      return resolvedOverride.url;
+    }
+    const resolved = window.ChartReviewArtifact.resolveReviewArtifactUrl(historyUrl, window.location.href);
+    if (!resolved.valid) {
+      throw new Error(resolved.error);
+    }
+    return resolved.url;
+  }
+
+  function displayUrl(urlValue) {
+    const url = new URL(urlValue, window.location.href);
+    return url.origin === window.location.origin ? url.pathname + url.search : url.href;
+  }
+
+  function applyArtifactViewerState(artifact) {
+    const filter = artifact.viewerState.visibleFilter;
+    state.filter = ["all", "levels", "range", "fib", "projection", "labels"].includes(filter) ? filter : "all";
+    state.overlayVisible = filter !== "none";
+    state.selectedId = state.annotations.some((annotation) => annotation.id === artifact.viewerState.selectedAnnotationId)
+      ? artifact.viewerState.selectedAnnotationId
+      : state.annotations[0]?.id ?? null;
+    syncFilterButtons();
+  }
+
+  function syncControlState() {
+    if (Array.from(dom.symbolSelect.options).some((option) => option.value === state.symbol)) {
+      dom.symbolSelect.value = state.symbol;
+    }
+    dom.resolutionButtons.forEach((button) => {
+      button.classList.toggle("active", button.dataset.resolution === state.resolution);
+    });
+  }
+
+  function syncFilterButtons() {
+    dom.filterButtons.forEach((button) => {
+      button.classList.toggle("active", button.dataset.filter === state.filter);
+    });
   }
 
   function buildHistoryUrl() {
@@ -481,17 +708,17 @@
   }
 
   function drawHorizontalLevel(annotation, width, selected) {
-    const y = yForPrice(annotation.draw.price);
+    const y = yForPrice(annotation.draw?.price);
     if (!isFiniteCoordinate(y)) return;
     appendLine(0, y, width, y, annotation.color, selected ? 3 : 2, selected ? "none" : "7 5");
     appendSvgLabel(annotation.label, 12, y - 8, annotation.color);
   }
 
   function drawRangeBox(annotation, selected) {
-    const x1 = xForTime(annotation.draw.startTime);
-    const x2 = xForTime(annotation.draw.endTime);
-    const yHigh = yForPrice(annotation.draw.high);
-    const yLow = yForPrice(annotation.draw.low);
+    const x1 = xForTime(annotation.draw?.startTime);
+    const x2 = xForTime(annotation.draw?.endTime);
+    const yHigh = yForPrice(annotation.draw?.high);
+    const yLow = yForPrice(annotation.draw?.low);
     if (![x1, x2, yHigh, yLow].every(isFiniteCoordinate)) return;
 
     const left = Math.min(x1, x2);
@@ -513,6 +740,7 @@
   }
 
   function drawFibLevels(annotation, width, selected) {
+    if (!Array.isArray(annotation.draw?.levels)) return;
     annotation.draw.levels.forEach((level) => {
       const y = yForPrice(level.price);
       if (!isFiniteCoordinate(y)) return;
@@ -523,14 +751,15 @@
   }
 
   function drawProjection(annotation, width, selected) {
-    const x1 = xForTime(annotation.draw.startTime);
-    const x2 = xForTime(annotation.draw.endTime);
-    const yLow = yForPrice(annotation.draw.low);
-    const yHigh = yForPrice(annotation.draw.high);
+    const x1 = xForTime(annotation.draw?.startTime);
+    const x2 = xForTime(annotation.draw?.endTime);
+    const yLow = yForPrice(annotation.draw?.low);
+    const yHigh = yForPrice(annotation.draw?.high);
     if ([x1, x2, yLow, yHigh].every(isFiniteCoordinate)) {
       appendLine(x1, yLow, x2, yHigh, annotation.color, selected ? 3 : 2, "8 6");
     }
 
+    if (!Array.isArray(annotation.draw?.levels)) return;
     annotation.draw.levels.forEach((level) => {
       const y = yForPrice(level.price);
       if (!isFiniteCoordinate(y)) return;
@@ -540,6 +769,7 @@
   }
 
   function drawTextLabels(annotation, selected) {
+    if (!Array.isArray(annotation.draw?.labels)) return;
     annotation.draw.labels.forEach((label) => {
       const x = xForTime(label.time);
       const y = yForPrice(label.price);
@@ -689,14 +919,36 @@
   function updateStageMeta() {
     const latest = state.candles.at(-1);
     const first = state.candles[0];
-    dom.latestBarLabel.textContent = latest ? formatDateTime(latest.time) : "No bar";
-    dom.reviewWindowLabel.textContent = first && latest
-      ? `${formatDateTime(first.time)} to ${formatDateTime(latest.time)}`
-      : "Not loaded";
+    const artifactSource = state.artifact?.candleSource;
+    const latestLabel = latest ? formatDateTime(latest.time) : artifactSource?.latestBarTime;
+    const windowStart = first ? formatDateTime(first.time) : artifactSource?.windowStart;
+    const windowEnd = latest ? formatDateTime(latest.time) : artifactSource?.windowEnd;
+    dom.latestBarLabel.textContent = latestLabel || "No bar";
+    dom.reviewWindowLabel.textContent = windowStart && windowEnd ? `${windowStart} to ${windowEnd}` : "Not loaded";
   }
 
   function updateSourceMetadata() {
     dom.sourceMetadata.innerHTML = "";
+    if (state.mode === "artifact" && state.artifact) {
+      const metadata = {
+        Artifact: displayUrl(state.artifactSource?.url || ""),
+        Symbol: state.artifact.symbol,
+        Timeframe: state.artifact.timeframe,
+        Resolution: state.artifact.resolution,
+        Provider: state.artifact.dataSource.provider,
+        Feed: state.artifact.dataSource.feed,
+        History: state.artifact.dataSource.historyUrl,
+        Generated: state.artifact.generatedAt,
+        "Declared bars": state.artifact.candleSource.bars,
+        "Loaded candles": state.candles.length,
+        "Stale check": state.stale ? "stale" : "current",
+        Caveats: state.artifact.caveats.join(" | "),
+        ...state.artifact.sourceMetadata
+      };
+      renderMetadata(metadata);
+      return;
+    }
+
     const latest = state.candles.at(-1);
     const metadata = {
       Symbol: state.symbol,
@@ -709,6 +961,10 @@
       "Stale check": state.stale ? "stale" : "current"
     };
 
+    renderMetadata(metadata);
+  }
+
+  function renderMetadata(metadata) {
     Object.entries(metadata).forEach(([key, value]) => {
       const dt = document.createElement("dt");
       dt.textContent = key;
@@ -770,6 +1026,17 @@
   }
 
   function reviewArtifactPayload() {
+    if (state.mode === "artifact" && state.artifact) {
+      return {
+        ...state.artifact,
+        viewerState: {
+          visibleFilter: state.overlayVisible ? state.filter : "none",
+          selectedAnnotationId: state.selectedId
+        },
+        annotations: state.annotations
+      };
+    }
+
     const first = state.candles[0] || null;
     const latest = state.candles.at(-1) || null;
     const timeframe = TIMEFRAMES[state.resolution]?.label ?? state.resolution;
@@ -833,6 +1100,20 @@
   }
 
   function sourceSummaryText() {
+    if (state.mode === "artifact" && state.artifact) {
+      return [
+        `artifact=${displayUrl(state.artifactSource?.url || "")}`,
+        `symbol=${state.artifact.symbol}`,
+        `resolution=${state.artifact.resolution}`,
+        `history=${state.artifact.dataSource.historyUrl}`,
+        `provider=${state.artifact.dataSource.provider}`,
+        `feed=${state.artifact.dataSource.feed}`,
+        `declaredBars=${state.artifact.candleSource.bars}`,
+        `loadedCandles=${state.candles.length}`,
+        `stale=${state.stale}`
+      ].join("\n");
+    }
+
     const latest = state.candles.at(-1);
     return [
       `symbol=${state.symbol}`,
