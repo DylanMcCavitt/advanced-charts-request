@@ -2,6 +2,19 @@
 
 Public landing page for requesting TradingView Advanced Charts access.
 
+Public site:
+
+```text
+https://chartreviewlab.company
+```
+
+Routes:
+
+- `/` public request page
+- `/widget-demo` public TradingView widget fallback
+- `/prototype` Alpaca-backed Lightweight Charts annotation prototype
+- `/advanced-charts` guarded Advanced Charts adapter scaffold while approval is pending
+
 Suggested form values:
 
 - Company name: `Dylan McCavitt / Independent Developer`
@@ -19,12 +32,14 @@ Public chart-review app with Alpaca UDF datafeed and official drawings API for l
 
 This site should not include any TradingView private library code.
 
+See `docs/advanced-charts-readiness.md` for post-approval setup steps and adapter contracts.
+
 ## Alpaca Datafeed
 
 The public UDF base URL is:
 
 ```text
-https://advanced-charts-request.vercel.app/api/datafeed
+https://chartreviewlab.company/api/datafeed
 ```
 
 Configure these Vercel env vars:
@@ -38,5 +53,5 @@ ALPACA_DATA_FEED=sip
 Check status:
 
 ```text
-https://advanced-charts-request.vercel.app/api/datafeed/status
+https://chartreviewlab.company/api/datafeed/status
 ```
